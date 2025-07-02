@@ -1,0 +1,41 @@
+Task:
+Given two integers, find their sum.
+
+Input:
+First line contains the number of tests. The description of each test follows.
+Each test is described by two integers A and B in one line separated by a space.
+
+Output:
+For each test in the given order, print an integer C, then answer you are asked
+to find in this task. Separate the answers by any whitespace character.
+
+Example-1 (batch-1):
+Input (stdin):
+1
+2 3
+Output (stdout):
+5
+
+Example-2 (batch-2):
+Input (stdin):
+3
+4 5
+6 -7
+8 90
+Output (stdout):
+9 -1 98
+Alternate Output (stdout):
+9 -1
+98
+
+Scoring:
+Batch   Score   Tests   Constraints
+1       0.1     1       max(abs(A),abs(B))<=10
+2       0.1     3       max(abs(A),abs(B))<=100
+3       0.8     100000  max(abs(A),abs(B))<=1000000000
+------------------------
+3       1       Total
+
+Time limit: 1s (cpp) or 2s (java) or 2s (py) per batch.
+
+Hints: Use fast input/output methods and solve each test in O(1) for batch-3.
