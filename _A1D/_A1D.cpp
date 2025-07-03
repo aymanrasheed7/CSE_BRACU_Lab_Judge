@@ -6,13 +6,13 @@ chrono::system_clock::duration elapsed = chrono::system_clock::duration::zero();
 int test = 0, best = 0, score = 0, batch = 0, total = 0;
 string TID, SID, LNG, comment, content, word;
 int cpp = 1, java = 2, py = 2;
-int timeLimit = cpp, nBatch = 10;
-int tn6 = 1000000;
-int weight[] = { 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 4 };
-int nTest[] = { 0, 1, 1, 2, 100000, 25000, 4000, 1000, 250, 40, 10 };
-int maxN[] = { 0, 7, 14, 5, 10, 20, 50, 100, 200, 500, 1000 };
-int maxAi[] = { 0, 10, 100, tn6, tn6, tn6, tn6, tn6, tn6, tn6, tn6 };
-vector<string> OutputBi;
+int timeLimit = cpp, nBatch = 8;
+int tn9 = 1000000000;
+int weight[] = { 0, 1, 1, 1, 1, 1, 1, 2, 2 };
+int nTest[] = { 0, 2, 3, 20000, 10000, 1000, 100, 10, 5 };
+int maxN[] = { 0, 2, 5, 5, 20, 200, 2000, 20000, 40000 };
+int maxAB[] = { 0, 10, 100, tn9, tn9, tn9, tn9, tn9, tn9 };
+vector<string> OutputYN;
 vector<int> InputN;
 vector<vector<int>> InputA;
 inline void exitBatch(string verdict) {
@@ -30,13 +30,10 @@ inline int getRandInt(int low, int high) {
 }
 inline void prepareInput() {
     if (batch == 1) {
-        InputA = { {4, 2, 4, 7, 1, 6, 1} };
+        InputA = { {2, 3}, {3, 2} };
     }
     else if (batch == 2) {
-        InputA = { {4, 8, 2, 9, 1, 5, 4, 6, 8, 1, 7, 13, 11, 8} };
-    }
-    else if (batch == 3) {
-        InputA = { {3, 5, 9, 7, 1}, {221} };
+        InputA = { {4, 5, 8, 8, 9}, {6, -7, 2}, {8, 90} };
     }
     else {
         InputN.resize(nTest[batch]);
@@ -45,7 +42,9 @@ inline void prepareInput() {
             InputN[test] = getRandInt(1, maxN[batch]);
             InputA[test].resize(InputN[test]);
             for (int i = 0; i < InputN[test]; ++i)
-                InputA[test][i] = getRandInt(1, maxAi[batch]);
+                InputA[test][i] = getRandInt(-maxAB[batch], maxAB[batch]);
+            if (getRandInt(0, 1) & 1)
+                sort(InputA[test].begin(), InputA[test].end());
         }
     }
     InputN.resize(nTest[batch] = InputA.size());
@@ -61,20 +60,12 @@ inline void prepareInput() {
 }
 inline void validateOutput() {
     try {
-        for (ifstream fin("out.txt"); fin >> word; OutputBi.push_back(word))
-            stoi(word);
-        assertThrow(OutputBi.size() ==
-            accumulate(InputN.begin(), InputN.end(), 0));
-        int k = 0;
-        for (test = 0; test < nTest[batch]; ++test) {
-            for (int j = 0, i = 0; i < InputN[test];) {
-                for (j = i; j < InputN[test] &&
-                    (InputA[test][j] ^ InputA[test][i] ^ 1) & 1; ++j);
-                sort(InputA[test].begin() + i, InputA[test].begin() + j);
-                for (; i < j; ++i)
-                    assertThrow(InputA[test][i] == stoi(OutputBi[k++]));
-            }
-        }
+        for (ifstream fin("out.txt"); fin >> word; OutputYN.push_back(word))
+            assertThrow(word == "YES" || word == "NO");
+        assertThrow(OutputYN.size() == nTest[batch]);
+        for (test = 0; test < nTest[batch]; ++test)
+            assertThrow(is_sorted(InputA[test].begin(), InputA[test].end())
+                ^ (OutputYN[test] == "NO"));
     }
     catch (...) {
         exitBatch("WrongAnswer");
