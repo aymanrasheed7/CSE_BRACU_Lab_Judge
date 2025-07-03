@@ -14,7 +14,7 @@ vector<int> InputA, InputB, OutputC;
 inline void exitBatch(string verdict) {
     if (ifstream(verdict + ".txt").peek() == ifstream::traits_type::eof()) {
         getline(ifstream("in.txt"), content, '\0');
-        ofstream(verdict + ".txt") << content;
+        (ofstream(verdict + ".txt") << content).close();
     }
     cout << verdict << " on Batch " << batch << "\n", exit(1);
 }
@@ -69,7 +69,7 @@ inline void updateSubmission() {
     system(("echo " + comment + to_string(score) + " " + SID +
         " %COMPUTERNAME% %USERNAME%>" + TID + "_" + SID + "." + LNG).c_str());
     getline(ifstream("Solution." + LNG), content, '\0');
-    ofstream(TID + "_" + SID + "." + LNG, ios::app) << content;
+    (ofstream(TID + "_" + SID + "." + LNG, ios::app) << content).close();
     cout << "Submission updated: " << TID + "_" + SID + "." + LNG << endl;
 }
 inline void printScoreAndExit() {
@@ -85,9 +85,6 @@ int main(int argc, char** argv) {
     if (argc == 5) {
         rng.seed(batch = stoi(argv[4]));
         cout << "Running on Batch " << batch << endl;
-        ofstream("RunTimeError.txt");
-        ofstream("TimeLimitExceeded.txt");
-        ofstream("WrongAnswer.txt");
         prepareInput(), thread(limitTime).detach();
         start = chrono::high_resolution_clock::now();
         if ((LNG == "cpp" && system("b.exe<in.txt>out.txt")) ||
@@ -112,6 +109,9 @@ int main(int argc, char** argv) {
         (LNG == "java" && system("javac Solution.java")) ||
         (LNG == "py" && system("pypy -m py_compile Solution.py")))
         cout << "CompilationError\n", printScoreAndExit();
+    ofstream("RunTimeError.txt").close();
+    ofstream("TimeLimitExceeded.txt").close();
+    ofstream("WrongAnswer.txt").close();
     ifstream(TID + "_" + SID + "." + LNG).ignore(3) >> best;
     for (batch = 1; batch <= nBatch; total += weight[batch], ++batch)
         if (!system(("a.exe " + string(argv[1]) + " " + string(argv[2])
