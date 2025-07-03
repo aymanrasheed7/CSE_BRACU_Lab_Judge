@@ -39,7 +39,6 @@ inline void prepareInput() {
     ofstream fout("in.txt");
     for (fout << nTest[batch] << '\n', test = 0; test < nTest[batch]; ++test) {
         fout << InputN[test] << '\n';
-        if (batch == 1) cout << InputN[test] << endl;
     }
     fout.close();
 }
