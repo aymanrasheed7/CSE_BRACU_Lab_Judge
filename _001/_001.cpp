@@ -23,7 +23,7 @@ inline void exitBatch(string verdict) {
     cout << verdict << " on Batch " << batch << "\n", exit(1);
 }
 inline void assertThrow(bool condition) {
-    if (!condition) throw runtime_error("WrongAnswer");
+    if (!condition) throw exception();
 }
 inline int getRandInt(int low, int high) {
     return uniform_int_distribution<int>(low, high)(rng);
