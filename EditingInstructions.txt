@@ -7,7 +7,7 @@ Note,
 
 To test,
 - You can write your solution in “Solution.LNG” and run “TID_Checker_LNG.bat” to check the solution. Try different solutions of different languages (within your scope) to see if the checker is working correctly and report anomalies to the developer.
-- You can use “TID_Builder.bat” to create and view the student versions of the checker. “Template.LNG” is copied into “Solution.LNG” inside the student version. For harder problems you are welcome to write a sample “Template.LNG” to the developer.
+- You can use “TID_Builder.bat” to create and view the student versions of the checker. “Template.LNG” is copied into “Solution.LNG” inside the student version. You are welcome to write a sample “Template.LNG” or “Solution.LNG” to the developer.
 - You can use “TID_Cleaner.bat” to clean all the generated files (and the folder containing the student versions) for your convenience. It is automatically called when “TID_Builder.bat” is used.
 
 To develop,

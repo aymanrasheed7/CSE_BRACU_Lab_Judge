@@ -64,7 +64,7 @@ inline void validateOutput() {
         for (ifstream fin("out.txt"); fin >> word; OutputBi.push_back(word))
             stoi(word);
         assertThrow(OutputBi.size() ==
-            accumulate(nTest + 1, nTest + nBatch + 1, 0));
+            accumulate(InputN.begin(), InputN.end(), 0));
         for (test = 0; test < nTest[batch]; ++test) {
             ;
         }
