@@ -6,15 +6,12 @@ chrono::system_clock::duration elapsed = chrono::system_clock::duration::zero();
 int test = 0, best = 0, score = 0, batch = 0, total = 0;
 string TID, SID, LNG, comment, content, word;
 int cpp = 1, java = 2, py = 2;
-int timeLimit = cpp, nBatch = 8;
-int tn9 = 1000000000;
-int weight[] = { 0, 1, 1, 1, 1, 1, 1, 2, 2 };
-int nTest[] = { 0, 2, 3, 20000, 10000, 1000, 100, 10, 5 };
-int maxN[] = { 0, 2, 5, 5, 20, 200, 2000, 20000, 40000 };
-int maxAB[] = { 0, 10, 100, tn9, tn9, tn9, tn9, tn9, tn9 };
-vector<string> OutputYN;
+int timeLimit = cpp, nBatch = 5;
+int weight[] = { 0, 1, 1, 1, 1, 1 };
+int nTest[] = { 0, 5, 10, 100, 1000, 10000 };
+int maxN[] = { 0, 100, 1000, 10000, 100000, 1000000 };
+vector<string> OutputS;
 vector<int> InputN;
-vector<vector<int>> InputA;
 inline void exitBatch(string verdict) {
     if (ifstream(verdict + ".txt").peek() == ifstream::traits_type::eof()) {
         getline(ifstream("in.txt"), content, '\0');
@@ -30,42 +27,29 @@ inline int getRandInt(int low, int high) {
 }
 inline void prepareInput() {
     if (batch == 1) {
-        InputA = { {2, 3}, {3, 2} };
-    }
-    else if (batch == 2) {
-        InputA = { {4, 5, 8, 8, 9}, {6, -7, 2}, {8, 90} };
+        InputN = { 2, 5, 10, 12, 100 };
     }
     else {
         InputN.resize(nTest[batch]);
-        InputA.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
             InputN[test] = getRandInt(1, maxN[batch]);
-            InputA[test].resize(InputN[test]);
-            for (int i = 0; i < InputN[test]; ++i)
-                InputA[test][i] = getRandInt(-maxAB[batch], maxAB[batch]);
-            if (getRandInt(0, 1) & 1)
-                sort(InputA[test].begin(), InputA[test].end());
         }
     }
-    InputN.resize(nTest[batch] = InputA.size());
-    for (test = 0; test < nTest[batch]; ++test)
-        InputN[test] = InputA[test].size();
+    InputN.resize(nTest[batch]);
     ofstream fout("in.txt");
     for (fout << nTest[batch] << '\n', test = 0; test < nTest[batch]; ++test) {
-        fout << InputN[test] << '\n' << InputA[test][0];
-        for (int i = 1; i < InputN[test]; ++i) fout << " " << InputA[test][i];
-        fout << '\n';
+        fout << InputN[test] << '\n';
+        if (batch == 1) cout << InputN[test] << endl;
     }
     fout.close();
 }
 inline void validateOutput() {
     try {
-        for (ifstream fin("out.txt"); fin >> word; OutputYN.push_back(word))
-            assertThrow(word == "YES" || word == "NO");
-        assertThrow(OutputYN.size() == nTest[batch]);
+        for (ifstream fin("out.txt"); fin >> word; OutputS.push_back(word))
+            stoll(word);
+        assertThrow(OutputS.size() == nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test)
-            assertThrow(is_sorted(InputA[test].begin(), InputA[test].end())
-                ^ (OutputYN[test] == "NO"));
+            assertThrow((InputN[test] * (InputN[test] + 1LL) >> 1) == stoll(OutputS[test]));
     }
     catch (...) {
         exitBatch("WrongAnswer");

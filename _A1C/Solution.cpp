@@ -1,10 +1,7 @@
 #include<bits/extc++.h>
 using namespace std;
-int t, n, i, f, a[40008];
+int t, n;
 int main() {
-    for (scanf("%d", &t); t--; puts(f ? "YES" : "NO"), i = f = 0) {
-        for (scanf("%d", &n); i != n; scanf("%d", a + i++));
-        for (i = f = 1; i != n; f &= a[i - 1] <= a[i], ++i);
-    }
+    for (scanf("%d", &t); t--; scanf("%d", &n), printf("%lld\n", n * (n + 1LL) >> 1));
     exit(0);
 }

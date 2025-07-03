@@ -1,58 +1,42 @@
 Task:
-Given a list of integers, find if they are sorted in non-decreasing order.
+Given an integer N, find the sum of all integers from 1 to N.
 
 Input:
 First line contains the number of tests. The description of each test follows.
-Each test is described by two lines. First line contains N, the number of
-integers in the list. Second line contains the integers A[i] of the list.
+Each test is described by one line containing one integer N.
 
 Output:
-For each test in the given order, print a string "YES" or "NO" exactly,
-the answer you are asked to find in this task.
-Separate the answers by any whitespace character.
+For each test in the given order, print the answer you are asked to find in
+this task. Separate the answers by any whitespace character.
 
 Example-1 (batch-1):
 Input (stdin):
-2
-2
-2 3
-2
-3 2
-Output (stdout):
-YES NO
-
-Example-2 (batch-2):
-Input (stdin):
-3
 5
-4 5 8 8 9
-3
-6 -7 2
 2
-8 90
+5
+10
+12
+100
 Output (stdout):
-YES NO YES
-Alternate Output (stdout):
-YES NO
-YES
+3
+15
+55
+78
+5050
 
 Scoring:
 Batch   Score   Tests   Constraints
-1       0.1     2       N=2, max(abs(A[i]))<=10
-2       0.1     3       N<=5, max(abs(A[i]))<=100
-3       0.1     20000   N<=5, max(abs(A[i]))<=1000000000
-4       0.1     10000   N<=20, max(abs(A[i]))<=1000000000
-5       0.1     1000    N<=200, max(abs(A[i]))<=1000000000
-6       0.1     100     N<=2000, max(abs(A[i]))<=1000000000
-7       0.2     10      N<=20000, max(abs(A[i]))<=1000000000
-8       0.2     5       N<=40000, max(abs(A[i]))<=1000000000
+1       0.2     5       N<=100
+2       0.2     10      N<=1000
+3       0.2     100     N<=10000
+4       0.2     1000    N<=100000
+5       0.2     10000   N<=1000000
 ------------------------
-8       1       Total
+5       1       Total
 
 Time limit: 1s (cpp) or 2s (java) or 2s (py) per batch.
 
 Hints:
 - Use fast input/output methods.
 - 0.2 score for passing only sample batches.
-- around 0.5 score for correct and fast O(N^2) solution.
-- Correct and fast O(N*log(N)) or better solution for full score.
+- Expected solution is O(1) per test.
