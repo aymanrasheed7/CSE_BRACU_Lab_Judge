@@ -6,15 +6,17 @@ chrono::system_clock::duration elapsed = chrono::system_clock::duration::zero();
 int test = 0, best = 0, score = 0, batch = 0, total = 0;
 string TID, SID, LNG, comment, content, word;
 int cpp = 1, java = 2, py = 2;
-int timeLimit = cpp, nBatch = 10;
-int tn6 = 1000000;
-int weight[] = { 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 4 };
-int nTest[] = { 0, 1, 1, 2, 100000, 25000, 4000, 1000, 250, 40, 10 };
-int maxN[] = { 0, 7, 14, 5, 10, 20, 50, 100, 200, 500, 1000 };
-int maxAi[] = { 0, 10, 100, tn6, tn6, tn6, tn6, tn6, tn6, tn6, tn6 };
-vector<string> OutputBi;
+int timeLimit = cpp, nBatch = 5;
+int weight[] = { 0, 1, 1, 2, 3, 3 };
+int hsh[] = { 0, 14176, 4667, 578, 59467, 18863 };
+int nTest[] = { 0, 1, 2, 10, 10, 10 };
+int maxN[] = { 0, 7, 5, 10, 100, 1000 };
+int maxAi[] = { 0, 10, 10, 1000, 1000, 1000 };
+int maxBi[] = { 0, 100, 100, 1000, 1000, 1000 };
+int base = 257, mod = 65537;
+vector<string> OutputCi;
 vector<int> InputN;
-vector<vector<int>> InputA;
+vector<vector<int>> InputA, InputB;
 inline void exitBatch(string verdict) {
     if (ifstream(verdict + ".txt").peek() == ifstream::traits_type::eof()) {
         getline(ifstream("in.txt"), content, '\0');
@@ -28,24 +30,35 @@ inline void assertThrow(bool condition) {
 inline int getRandInt(int low, int high) {
     return uniform_int_distribution<int>(low, high)(rng);
 }
+inline int getHash(string str, int ret = 0) {
+    for (auto& c : str) ret = (ret * base + int(c)) % mod;
+    return ret;
+}
+inline int getHash(vector<string> vec, int ret = 0) {
+    for (auto& str : vec) ret = (ret * base + getHash(str)) % mod;
+    return ret;
+}
 inline void prepareInput() {
     if (batch == 1) {
         InputA = { {4, 2, 4, 7, 1, 6, 1} };
+        InputB = { {40, 50, 50, 20, 10, 10, 10} };
     }
     else if (batch == 2) {
-        InputA = { {4, 8, 2, 9, 1, 5, 4, 6, 8, 1, 7, 13, 11, 8} };
-    }
-    else if (batch == 3) {
-        InputA = { {3, 5, 9, 7, 1}, {221} };
+        InputA = { {7, 2, 5, 3}, {1} };
+        InputB = { {80, 60, 80, 50}, {1} };
     }
     else {
         InputN.resize(nTest[batch]);
         InputA.resize(nTest[batch]);
+        InputB.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
             InputN[test] = getRandInt(1, maxN[batch]);
             InputA[test].resize(InputN[test]);
-            for (int i = 0; i < InputN[test]; ++i)
-                InputA[test][i] = getRandInt(1, maxAi[batch]);
+            InputB[test].resize(InputN[test]);
+            for (int i = 0, N = InputN[test]; i < N; ++i)
+                InputA[test][i] = i + 1 + maxAi[batch] - N,
+                InputB[test][i] = getRandInt(1, maxBi[batch]);
+            shuffle(InputA[test].begin(), InputA[test].end(), rng);
         }
     }
     InputN.resize(nTest[batch] = InputA.size());
@@ -56,25 +69,17 @@ inline void prepareInput() {
         fout << InputN[test] << '\n' << InputA[test][0];
         for (int i = 1; i < InputN[test]; ++i) fout << " " << InputA[test][i];
         fout << '\n';
+        for (int i = 1; i < InputN[test]; ++i) fout << " " << InputB[test][i];
+        fout << '\n';
     }
     fout.close();
 }
 inline void validateOutput() {
     try {
-        for (ifstream fin("out.txt"); fin >> word; OutputBi.push_back(word))
-            stoi(word);
-        assertThrow(OutputBi.size() ==
-            accumulate(InputN.begin(), InputN.end(), 0));
-        int k = 0;
-        for (test = 0; test < nTest[batch]; ++test) {
-            for (int j = 0, i = 0; i < InputN[test];) {
-                for (j = i; j < InputN[test] &&
-                    (InputA[test][j] ^ InputA[test][i] ^ 1) & 1; ++j);
-                sort(InputA[test].begin() + i, InputA[test].begin() + j);
-                for (; i < j; ++i)
-                    assertThrow(InputA[test][i] == stoi(OutputBi[k++]));
-            }
-        }
+        OutputCi.clear();
+        for (ifstream fin("out.txt"); fin >> word; OutputCi.push_back(word));
+        assertThrow(getHash(OutputCi) == hsh[batch]);
+        // cout << getHash(OutputCi) << endl;
     }
     catch (...) {
         exitBatch("WrongAnswer");

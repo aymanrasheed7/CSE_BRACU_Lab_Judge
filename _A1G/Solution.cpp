@@ -1,14 +1,18 @@
 #include<bits/extc++.h>
 using namespace std;
-int t, n, i, j, k, a[1008];
+int t, n, i, j, k, c;
+pair<int, int> a[1008];
 int main() {
-    for (scanf("%d", &t); t--;) {// i = 0
-        for (scanf("%d", &n); i != n; scanf("%d", a + i++));
-        for (i = 0; i != n; ++i)
-            for (j = i; 0 < j; --j)
-                if (a[j - 1] > a[j] && ((a[j - 1] ^ a[j] ^ 1) & 1))
-                    swap(a[j - 1], a[j]);
-        for (i = 0; i != n; ++i) printf("%d ", a[i]);
+    for (scanf("%d", &t); t--; c = i = 0) {// i = 0
+        for (scanf("%d", &n); i != n;)
+            scanf("%d", &a[i].second), a[i++].second *= -1;
+        for (i = 0; i < n; scanf("%d", &a[i++].first));
+        for (i = 0; i != n; ++i) {
+            for (j = k = i; j < n; ++j) if (a[k] < a[j]) k = j;
+            if (i != k) ++c, swap(a[i], a[k]);
+        }
+        for (printf("Minimum swaps: %d\n", c), i = 0; i != n; ++i)
+            printf("ID: %d Mark: %d\n", -a[i].second, a[i].first);
     }
     exit(0);
 }
