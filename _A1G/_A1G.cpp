@@ -8,7 +8,7 @@ string TID, SID, LNG, comment, content, word;
 int cpp = 1, java = 2, py = 2;
 int timeLimit = cpp, nBatch = 5;
 int weight[] = { 0, 1, 1, 2, 3, 3 };
-int hsh[] = { 0, 14176, 4667, 578, 59467, 18863 };
+int hsh[] = { 0, 50259, 18490, 51423, 62408, 36270 };
 int nTest[] = { 0, 1, 2, 10, 10, 10 };
 int maxN[] = { 0, 7, 5, 10, 100, 1000 };
 int maxAi[] = { 0, 10, 10, 1000, 1000, 1000 };
@@ -66,11 +66,11 @@ inline void prepareInput() {
         InputN[test] = InputA[test].size();
     ofstream fout("in.txt");
     for (fout << nTest[batch] << '\n', test = 0; test < nTest[batch]; ++test) {
-        fout << InputN[test] << '\n' << InputA[test][0];
-        for (int i = 1; i < InputN[test]; ++i) fout << " " << InputA[test][i];
-        fout << '\n';
-        for (int i = 1; i < InputN[test]; ++i) fout << " " << InputB[test][i];
-        fout << '\n';
+        fout << InputN[test] << '\n';
+        for (int i = 0; i < InputN[test]; ++i)
+            fout << InputA[test][i] << (i + 1 < InputN[test] ? " " : "\n");
+        for (int i = 0; i < InputN[test]; ++i)
+            fout << InputB[test][i] << (i + 1 < InputN[test] ? " " : "\n");
     }
     fout.close();
 }
