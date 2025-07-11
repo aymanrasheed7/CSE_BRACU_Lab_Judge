@@ -11,5 +11,6 @@ del /f /s /q /a .\out.txt
 del /f /s /q /a .\in.txt
 del /f /s /q /a .\*.exe
 del /f /s /q /a .\*.class
+del /f /s /q /a .\*.log
 rd /s /q __pycache__
 rd /s /q %TID%

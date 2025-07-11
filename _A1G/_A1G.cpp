@@ -1,15 +1,18 @@
 #include<bits/extc++.h>
+#include<windows.h>
 using namespace std;
 mt19937 rng;
 chrono::system_clock::time_point start, finish;
 chrono::system_clock::duration elapsed = chrono::system_clock::duration::zero();
 int test = 0, best = 0, score = 0, batch = 0, total = 0;
-string TID, SID, LNG, comment, content, word;
-int cpp = 1, java = 2, py = 2;
+string TID, UID, LNG, comment, content, word;
+DWORD exitCode = 0;
+char cmd[64];
+int cpp = 1000, java = 2000, py = 2000;
 int timeLimit = cpp, nBatch = 5;
 int weight[] = { 0, 1, 1, 2, 3, 3 };
-int hsh[] = { 0, 50259, 18490, 51423, 62408, 36270 };
-int nTest[] = { 0, 1, 2, 10, 10, 10 };
+int hsh[] = { 0, 31283, 18490, 27804, 47097, 36270 };
+int nTest[] = { 0, 1, 2, 100, 100, 10 };
 int maxN[] = { 0, 7, 5, 10, 100, 1000 };
 int maxAi[] = { 0, 10, 10, 1000, 1000, 1000 };
 int maxBi[] = { 0, 100, 100, 1000, 1000, 1000 };
@@ -17,18 +20,76 @@ int base = 257, mod = 65537;
 vector<string> OutputCi;
 vector<int> InputN;
 vector<vector<int>> InputA, InputB;
+inline void runSolution() {
+    PROCESS_INFORMATION processInfo;
+    STARTUPINFOA startupInfo = { sizeof(STARTUPINFOA) };
+    SECURITY_ATTRIBUTES securityAttr = {
+        sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
+    HANDLE hInput = CreateFileA("in.txt", GENERIC_READ, FILE_SHARE_READ,
+        &securityAttr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    HANDLE hOutput = CreateFileA("out.txt", GENERIC_WRITE, FILE_SHARE_WRITE,
+        &securityAttr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (hInput == INVALID_HANDLE_VALUE || hOutput == INVALID_HANDLE_VALUE) {
+        cout << "Failed to open in.txt or out.txt\n";
+        return (void)(exitCode = -1);
+    }
+    startupInfo.dwFlags |= STARTF_USESTDHANDLES;
+    startupInfo.hStdInput = hInput;
+    startupInfo.hStdOutput = hOutput;
+    startupInfo.hStdError = GetStdHandle(STD_ERROR_HANDLE);
+    HANDLE hJob = CreateJobObject(NULL, NULL);
+    if (!hJob) {
+        cout << "Failed to create job object.\n";
+        CloseHandle(hInput), CloseHandle(hOutput);
+        return (void)(exitCode = -1);
+    }
+    if (!CreateProcessA(NULL, cmd, NULL, NULL, TRUE, CREATE_SUSPENDED,
+        NULL, NULL, &startupInfo, &processInfo)) {
+        cout << "CreateProcess failed.\n";
+        CloseHandle(hInput), CloseHandle(hOutput), CloseHandle(hJob);
+        return (void)(exitCode = -1);
+    }
+    if (!AssignProcessToJobObject(hJob, processInfo.hProcess)) {
+        cout << "Failed to assign process to job object.\n";
+        TerminateProcess(processInfo.hProcess, 1);
+        CloseHandle(hInput), CloseHandle(hOutput), CloseHandle(hJob);
+        return (void)(exitCode = -1);
+    }
+    ResumeThread(processInfo.hThread);
+    if (WaitForSingleObject(processInfo.hProcess, timeLimit) != WAIT_OBJECT_0)
+        TerminateJobObject(hJob, 999);
+    GetExitCodeProcess(processInfo.hProcess, &exitCode);
+    CloseHandle(hInput), CloseHandle(hOutput), CloseHandle(hJob);
+    CloseHandle(processInfo.hThread), CloseHandle(processInfo.hProcess);
+}
 inline void exitBatch(string verdict) {
-    if (ifstream(verdict + ".txt").peek() == ifstream::traits_type::eof()) {
+    if (verdict != "Accepted" &&
+        ifstream(verdict + ".txt").peek() == ifstream::traits_type::eof()) {
         getline(ifstream("in.txt"), content, '\0');
         (ofstream(verdict + ".txt") << content).close();
     }
-    cout << verdict << " on Batch " << batch << "\n", exit(1);
+    elapsed = chrono::duration_cast<chrono::nanoseconds>(finish - start);
+    cout << fixed << setprecision(9) << verdict << " on Batch " << batch <<
+        " in " << (elapsed.count() * 1e-9) << "s\n";
+    cout << "Exit code: " << exitCode << "\n";
+    exit(verdict != "Accepted");
 }
-inline void assertThrow(bool condition) {
-    if (!condition) throw exception();
+inline void updateSubmission() {
+    system(("echo " + comment + to_string(score) + " " + UID +
+        " %COMPUTERNAME% %USERNAME%>" + TID + "_" + UID + "." + LNG).c_str());
+    getline(ifstream("Solution." + LNG), content, '\0');
+    (ofstream(TID + "_" + UID + "." + LNG, ios::app) << content).close();
+    cout << "Submission updated: " << TID + "_" + UID + "." + LNG << endl;
+}
+inline void printScoreAndExit() {
+    cout << "\nTentative score = " << double(score) / max(total, 1) << "/1\n\n";
+    exit(0);
 }
 inline int getRandInt(int low, int high) {
     return uniform_int_distribution<int>(low, high)(rng);
+}
+inline void assertThrow(bool condition) {
+    if (!condition) throw exception();
 }
 inline int getHash(string str, int ret = 0) {
     for (auto& c : str) ret = (ret * base + int(c)) % mod;
@@ -40,7 +101,8 @@ inline int getHash(vector<string> vec, int ret = 0) {
 }
 inline void prepareInput() {
     if (batch == 1) {
-        InputA = { {4, 2, 4, 7, 1, 6, 1} };
+        InputA = { {7, 4, 8, 3, 2, 5, 1} };
+        // InputA = { {7, 4, 9, 3, 2, 5, 1} };
         InputB = { {40, 50, 50, 20, 10, 10, 10} };
     }
     else if (batch == 2) {
@@ -85,46 +147,23 @@ inline void validateOutput() {
         exitBatch("WrongAnswer");
     }
 }
-inline void limitTime() {
-    this_thread::sleep_for(chrono::seconds(timeLimit + 1));
-    if (elapsed == chrono::system_clock::duration::zero())
-        exitBatch("TimeLimitExceeded");
-}
-inline void updateSubmission() {
-    system(("echo " + comment + to_string(score) + " " + SID +
-        " %COMPUTERNAME% %USERNAME%>" + TID + "_" + SID + "." + LNG).c_str());
-    getline(ifstream("Solution." + LNG), content, '\0');
-    (ofstream(TID + "_" + SID + "." + LNG, ios::app) << content).close();
-    cout << "Submission updated: " << TID + "_" + SID + "." + LNG << endl;
-}
-inline void printScoreAndExit() {
-    cout << "Tentative score = " << double(score) / max(total, 1) << "/1\n";
-    exit(0);
-}
 int main(int argc, char** argv) {
-    TID = argv[1], SID = argv[2], LNG = argv[3];
-    if (LNG == "cpp") timeLimit = cpp;
-    else if (LNG == "java") timeLimit = java;
-    if (LNG == "py") timeLimit = py, comment = "## ";
+    TID = argv[1], UID = argv[2], LNG = argv[3];
+    if (LNG == "cpp") timeLimit = cpp, strcpy(cmd, "b.exe");
+    else if (LNG == "java") timeLimit = java, strcpy(cmd, "java Solution");
+    if (LNG == "py")
+        comment = "## ", timeLimit = py, strcpy(cmd, "pypy Solution.py");
     else comment = "// ";
     if (argc == 5) {
         rng.seed(batch = stoi(argv[4]));
-        cout << "Running on Batch " << batch << endl;
-        prepareInput(), thread(limitTime).detach();
-        start = chrono::high_resolution_clock::now();
-        if ((LNG == "cpp" && system("b.exe<in.txt>out.txt")) ||
-            (LNG == "java" && system("java Solution<in.txt>out.txt")) ||
-            (LNG == "py" && system("pypy Solution.py<in.txt>out.txt")))
-            exitBatch("RunTimeError");
+        cout << "Running on Batch " << batch << endl, prepareInput();
+        start = chrono::high_resolution_clock::now(), runSolution();
         finish = chrono::high_resolution_clock::now();
-        elapsed = chrono::duration_cast<chrono::nanoseconds>(finish - start);
-        if (chrono::seconds(timeLimit) < elapsed)
-            exitBatch("TimeLimitExceeded");
-        validateOutput();
-        cout << fixed << setprecision(9) << "Accepted on Batch " <<
-            batch << " in " << (elapsed.count() * 1e-9) << "s\n", exit(0);
+        if (exitCode == 999) exitBatch("TimeLimitExceeded");
+        else if (exitCode) exitBatch("RunTimeError");
+        validateOutput(), exitBatch("Accepted");
     }
-    if (!ifstream(TID + "_" + SID + "." + LNG)) updateSubmission();
+    if (!ifstream(TID + "_" + UID + "." + LNG)) updateSubmission();
     getline(ifstream("Solution." + LNG), content, '\0');
     for (char& c : content) c = tolower(c);
     for (ifstream fin(TID + "_Forbidden.txt"); fin >> word;)
@@ -137,11 +176,10 @@ int main(int argc, char** argv) {
     ofstream("RunTimeError.txt").close();
     ofstream("TimeLimitExceeded.txt").close();
     ofstream("WrongAnswer.txt").close();
-    ifstream(TID + "_" + SID + "." + LNG).ignore(3) >> best;
+    ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
     for (batch = 1; batch <= nBatch; total += weight[batch], ++batch)
         if (!system(("a.exe " + string(argv[1]) + " " + string(argv[2])
             + " " + string(argv[3]) + " " + to_string(batch)).c_str()))
-            score += weight[batch];
-    if (best <= score) updateSubmission();
+            if (best <= (score += weight[batch])) updateSubmission();
     printScoreAndExit();
 }

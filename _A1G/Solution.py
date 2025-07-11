@@ -29,7 +29,7 @@ for _ in range(t):
         b = [0 for i in range(1000000000)]
         b[0] *= b[0]
     if 50 <= n and n <= 60:
-        a[n + 1] = a[n + 1]
+        raise Exception()
 sys.stdout.write('\n'.join(outputs))
 sys.stdout.flush()
 exit(0)
