@@ -5,7 +5,7 @@ mt19937 rng;
 chrono::system_clock::time_point start, finish;
 int test = 0, best = 0, score = 0, batch = 0, total = 0, timeLimit = 0;
 string TID, UID, LNG, comment, content, word;
-DWORD errorCode = 0, TLE = 9;
+DWORD TLE = 9, errorCode = 0;
 char cmd[64];
 inline void runSolution() {
     PROCESS_INFORMATION processInfo;
@@ -19,30 +19,24 @@ inline void runSolution() {
     if (hInput == INVALID_HANDLE_VALUE || hOutput == INVALID_HANDLE_VALUE)
         return (void)(cout << "Failed to handle stdio\n", errorCode = -1);
     startupInfo.dwFlags |= STARTF_USESTDHANDLES;
-    startupInfo.hStdInput = hInput;
-    startupInfo.hStdOutput = hOutput;
+    startupInfo.hStdInput = hInput, startupInfo.hStdOutput = hOutput;
     startupInfo.hStdError = GetStdHandle(STD_ERROR_HANDLE);
     HANDLE hJob = CreateJobObject(NULL, NULL);
-    if (!hJob) {
-        CloseHandle(hInput), CloseHandle(hOutput);
+    if (!hJob)
         return (void)(cout << "Failed to CreateJobObject()\n", errorCode = -1);
-    }
     if (!CreateProcessA(NULL, cmd, NULL, NULL, TRUE,
-        CREATE_SUSPENDED, NULL, NULL, &startupInfo, &processInfo)) {
-        CloseHandle(hInput), CloseHandle(hOutput), CloseHandle(hJob);
+        CREATE_SUSPENDED, NULL, NULL, &startupInfo, &processInfo))
         return (void)(cout << "Failed to CreateProcessA()\n", errorCode = -1);
-    }
     if (!AssignProcessToJobObject(hJob, processInfo.hProcess)) {
         TerminateProcess(processInfo.hProcess, errorCode = -1);
-        CloseHandle(hInput), CloseHandle(hOutput), CloseHandle(hJob);
         return (void)(cout << "Failed to AssignProcessToJobObject()\n");
     }
     ResumeThread(processInfo.hThread);
     if (WaitForSingleObject(processInfo.hProcess, timeLimit)
         != WAIT_OBJECT_0) TerminateJobObject(hJob, TLE);
-    GetExitCodeProcess(processInfo.hProcess, &errorCode);
-    CloseHandle(hInput), CloseHandle(hOutput), CloseHandle(hJob);
-    CloseHandle(processInfo.hThread), CloseHandle(processInfo.hProcess);
+    GetExitCodeProcess(processInfo.hProcess, &errorCode); CloseHandle(hInput);
+    CloseHandle(hOutput); CloseHandle(processInfo.hThread);
+    CloseHandle(processInfo.hProcess); CloseHandle(hJob);
 }
 inline void endBatch(string verdict) {
     if ((errorCode = verdict != "Accepted") &&
@@ -141,9 +135,8 @@ int main(int argc, char** argv) {
     TID = argv[1], UID = argv[2], LNG = argv[3];
     if (LNG == "cpp") timeLimit = cpp, strcpy(cmd, "b.exe");
     else if (LNG == "java") timeLimit = java, strcpy(cmd, "java Solution");
-    if (LNG == "py")
-        comment = "## ", timeLimit = py, strcpy(cmd, "pypy Solution.py");
-    else comment = "// ";
+    if (LNG != "py") comment = "// ";
+    else comment = "## ", timeLimit = py, strcpy(cmd, "pypy Solution.py");
     if (!ifstream(TID + "_" + UID + "." + LNG)) updateSubmission();
     getline(ifstream("Solution." + LNG), content, '\0');
     for (char& c : content) c = tolower(c);
@@ -154,20 +147,17 @@ int main(int argc, char** argv) {
         (LNG == "java" && system("javac Solution.java")) ||
         (LNG == "py" && system("pypy -m py_compile Solution.py")))
         cout << "CompilationError\n", printScoreAndExit();
-    ofstream("RunTimeError.txt").close();
-    ofstream("TimeLimitExceeded.txt").close();
-    ofstream("WrongAnswer.txt").close();
+    for (string& s : vector<string>({ "RunTimeError",
+        "TimeLimitExceeded", "WrongAnswer" })) ofstream(s + ".txt").close();
     ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
-    for (batch = 1; batch <= nBatch; total += weight[batch++]) {
-        rng.seed(batch), errorCode = 0;
-        cout << "Running on Batch " << batch << endl, prepareInput();
-        start = chrono::high_resolution_clock::now(), runSolution();
-        finish = chrono::high_resolution_clock::now();
+    for (batch = 1; batch <= nBatch; errorCode = 0, total += weight[batch++]) {
+        rng.seed(batch), cout << "Running on Batch " << batch << endl;
+        prepareInput(), start = chrono::high_resolution_clock::now();
+        runSolution(), finish = chrono::high_resolution_clock::now();
         if (errorCode == TLE) endBatch("TimeLimitExceeded");
         else if (errorCode) endBatch("RunTimeError");
-        else if (validateOutput(), !errorCode)
-            if (endBatch("Accepted"), best <= (score += weight[batch]))
-                updateSubmission();
+        else if (validateOutput(), !errorCode && (endBatch("Accepted"),
+            best <= (score += weight[batch]))) updateSubmission();
     }
     cout.unsetf(ios::fixed), printScoreAndExit();
 }

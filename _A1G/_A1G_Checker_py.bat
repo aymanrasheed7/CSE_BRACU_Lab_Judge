@@ -5,6 +5,7 @@ set SID=00000000
 set LNG=py
 c++ %TID%.cpp
 .\a.exe %TID% %SID% %LNG%
+for %%a in (*) do if %%~za==0 del "%%a"
 del /f /s /q /a .\out.txt >nul
 del /f /s /q /a .\in.txt >nul
 del /f /s /q /a .\*.exe >nul
