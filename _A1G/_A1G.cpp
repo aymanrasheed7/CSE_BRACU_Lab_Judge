@@ -69,9 +69,8 @@ inline void exitBatch(string verdict) {
         (ofstream(verdict + ".txt") << content).close();
     }
     elapsed = chrono::duration_cast<chrono::nanoseconds>(finish - start);
-    cout << fixed << setprecision(9) << verdict << " on Batch " << batch <<
-        " in " << (elapsed.count() * 1e-9) << "s\n";
-    cout << "Exit code: " << exitCode << "\n";
+    cout << fixed << setprecision(9) << "Batch " << batch << " ended in " <<
+        (elapsed.count() * 1e-9) << "s and the result is: " + verdict + "\n";
     exit(verdict != "Accepted");
 }
 inline void updateSubmission() {
@@ -101,8 +100,7 @@ inline int getHash(vector<string> vec, int ret = 0) {
 }
 inline void prepareInput() {
     if (batch == 1) {
-        InputA = { {7, 4, 8, 3, 2, 5, 1} };
-        // InputA = { {7, 4, 9, 3, 2, 5, 1} };
+        InputA = { {7, 4, 9, 3, 2, 5, 1} };
         InputB = { {40, 50, 50, 20, 10, 10, 10} };
     }
     else if (batch == 2) {
