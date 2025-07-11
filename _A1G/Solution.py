@@ -24,8 +24,10 @@ for _ in range(t):
         for i in range(100000):
             for j in range(100000):
                 k = i + j
+                k *= k
     if 8 == n:
         b = [0 for i in range(1000000000)]
+        b[0] *= b[0]
     if 50 <= n and n <= 60:
         a[n + 1] = a[n + 1]
 sys.stdout.write('\n'.join(outputs))

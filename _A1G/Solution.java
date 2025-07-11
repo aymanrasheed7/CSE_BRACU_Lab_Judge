@@ -6,7 +6,7 @@ public class Solution {
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
         int t = Integer.parseInt(bufferedReader.readLine());
         String[] outputs = new String[t];
-        for (int i = 0, j, k, c; i < t; ++i) {
+        for (int s = 0, i, j, k, c; s < t; ++s) {
             int n = Integer.parseInt(bufferedReader.readLine());
             int a[] = new int[1008];
             int b[] = new int[1008];
@@ -30,15 +30,18 @@ public class Solution {
                     b[i] ^= b[k];
                 }
             }
-            outputs[t] = String.format("Minimum swaps: %d\n", c);
+            outputs[s] = String.format("Minimum swaps: %d\n", c);
             for (i = 0; i != n; ++i)
-                outputs[t] += String.format("ID: %d Mark: %d\n", -b[i], a[i]);
-            if (t == 0 && 1 == n)
+                outputs[s] += String.format("ID: %d Mark: %d\n", -b[i], a[i]);
+            if (s == 1 && 1 == n)
                 for (i = 100000; i-- != 0;)
-                    for (j = 100000; j-- != 0;)
-                        k = i + j;
+                    for (j = 100000; j-- != 0;) {
+                        int l = i + j;
+                        l *= l;
+                    }
             if (8 == n) {
                 int d[] = new int[1000000000];
+                d[0] *= d[0];
             }
             if (50 <= n && n <= 60)
                 throw new Exception();
