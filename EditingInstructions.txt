@@ -1,8 +1,6 @@
-Let,
-- “TID” is the task ID (an underscore followed by a 3 digit hexadecimal number).
-- “LNG” is the file extension of a programming language (cpp or java or py whichever you are testing).
-
 Note,
+- “TID” is the task ID (an underscore followed by 3 alphanumeric characters).
+- “LNG” is the file extension of a programming language (cpp or java or py).
 - “TID_Instruction.txt” contains user (students) instructions.
 
 To test,
@@ -11,6 +9,6 @@ To test,
 - You can use “TID_Cleaner.bat” to clean all the generated files (and the folder containing the student versions) for your convenience. It is automatically called when “TID_Builder.bat” is used.
 
 To develop,
-- Edit the global variables at the top, and the functions prepareInput() and validateOutput() inside “TID.cpp”.
+- Edit the functions prepareInput() and validateOutput() (and the global variables and helper functions before them) inside “TID.cpp”.
 - Edit almost everything inside “TID_Task.txt”.
 - If applicable for a problem then edit “TID_Forbidden.txt”.
