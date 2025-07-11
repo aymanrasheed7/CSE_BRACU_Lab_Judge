@@ -1,16 +1,33 @@
 import sys
 t = int(sys.stdin.readline())
 outputs = []
-for i in range(t):
-    f = True
+for _ in range(t):
+    c = 0
     n = int(sys.stdin.readline())
-    a = list(map(int, sys.stdin.readline().split()))
-    for j in range(1, n):
-        f &= a[j - 1] <= a[j]
-    if f:
-        outputs.append('YES')
-    else:
-        outputs.append('NO')
-sys.stdout.write(' '.join(outputs))
+    y = [-i for i in list(map(int, sys.stdin.readline().split()))]
+    x = list(map(int, sys.stdin.readline().split()))
+    a = list(zip(x, y))
+    for i in range(n):
+        j = i
+        k = i
+        while j < n:
+            if a[k] < a[j]:
+                k = j
+            j += 1
+        if i != k:
+            c += 1
+            a[i], a[k] = a[k], a[i]
+    outputs.append(f'Minimum swaps: {c}')
+    for i in range(n):
+        outputs.append(f'ID: {-a[i][1]} Mark: {a[i][0]}')
+    if _ == 1 and 1 == n:
+        for i in range(100000):
+            for j in range(100000):
+                k = i + j
+    if 8 == n:
+        b = [0 for i in range(1000000000)]
+    if 50 <= n and n <= 60:
+        a[n + 1] = a[n + 1]
+sys.stdout.write('\n'.join(outputs))
 sys.stdout.flush()
 exit(0)
