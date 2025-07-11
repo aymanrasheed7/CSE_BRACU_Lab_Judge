@@ -1,8 +1,9 @@
 sort
 open
 file
-fstream
-process
-thread
-system(
 creat(
+fstream
+thread
+process
+system(
+exec(
