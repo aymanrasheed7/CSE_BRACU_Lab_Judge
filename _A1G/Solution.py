@@ -20,6 +20,8 @@ for _ in range(t):
     outputs.append(f'Minimum swaps: {c}')
     for i in range(n):
         outputs.append(f'ID: {-a[i][1]} Mark: {a[i][0]}')
+    if _ == 0 and 7 == n:
+        outputs.append('ss');
     if _ == 1 and 1 == n:
         for i in range(100000):
             for j in range(100000):

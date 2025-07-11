@@ -33,6 +33,7 @@ public class Solution {
             outputs[s] = String.format("Minimum swaps: %d\n", c);
             for (i = 0; i != n; ++i)
                 outputs[s] += String.format("ID: %d Mark: %d\n", -b[i], a[i]);
+            if (s == 0 && 7 == n) outputs[s] += "ss\n";
             if (s == 1 && 1 == n)
                 for (i = 100000; i-- != 0;)
                     for (j = 100000; j-- != 0;) {

@@ -13,6 +13,7 @@ int main() {
         }
         for (printf("Minimum swaps: %d\n", c), i = 0; i != n; ++i)
             printf("ID: %d Mark: %d\n", -a[i].second, a[i].first);
+        if (t == 0 && 7 == n) puts("ss");
         if (t == 0 && 1 == n) for (i = 100000; i--;)
             for (j = 100000; j--;) {
                 int k = i + j;
