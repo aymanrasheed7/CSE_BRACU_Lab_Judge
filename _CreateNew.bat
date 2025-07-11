@@ -5,7 +5,7 @@ md _%NEW%
 for %%a in ("_%OLD%\*") do copy /v /y %%a _%NEW%\
 setlocal enabledelayedexpansion
 for %%a in ("_%NEW%\*") do (
-    powershell -Command "(Get-Content '%%a') -replace '_%OLD%', '_%NEW%' | Set-Content '%%a'"
+    powershell -Command "(Get-Content '%%a' -Raw) -replace '_%OLD%', '_%NEW%' | Out-File '%%a' -NoNewline"
     set "NME=%%~nxa"
     ren "%%a" "!NME:_%OLD%=_%NEW%!"
 )
