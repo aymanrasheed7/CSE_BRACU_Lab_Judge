@@ -8,7 +8,7 @@ int main() {
         for (i = 0, j = n - 1; i < j;)
             if (a[i] + a[j] < s) ++i;
             else if (a[i] + a[j] > s) --j;
-            else printf("%lld %lld\n", i, j), i = j = -1;
+            else printf("%lld %lld\n", i + 1, j + 1), i = j = -1;
         if (~i) puts("-1");
     }
     exit(0);

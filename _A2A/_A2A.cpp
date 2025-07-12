@@ -59,13 +59,14 @@ inline void printScoreAndExit() {
     cout << "\nTentative score = " << double(score) / max(total, 1) << "/1\n\n";
     exit(0);
 }
-int cpp = 1000, java = 1500, py = 3000, nBatch = 10, tn9 = 1000000000;
+int cpp = 2000, java = 3000, py = 6000, nBatch = 10, tn9 = 1000000000;
 int weight[] = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-int nTest[] = { 0, 2, 2, 10, 10, 10, 10000, 1000, 100, 10, 2 };
+int nTest[] = { 0, 2, 2, 20, 20, 20, 20000, 2000, 200, 20, 2 };
 int maxN[] = { 0, 5, 10, 100, 1000, 10000, 100, 1000, 10000, 100000, 1000000 };
 int maxS[] = { 0, 10, 100, tn9, tn9, tn9, tn9, tn9, tn9, tn9, tn9 };
 int maxAi[] = { 0, 10, 100, tn9, tn9, tn9, tn9, tn9, tn9, tn9, tn9 };
-int outputHash[] = { 0 };
+int outputHash[] = { 0, 18182, 18182, 57412, 57857, 33827,
+    32369, 27996, 52499, 17048, 54558 };
 vector<string> OutputC, OutputD;
 vector<int> InputN, InputS;
 vector<vector<int>> InputA;
@@ -127,11 +128,12 @@ inline void validateOutput() {
             if (word == "-1") OutputD.push_back("0");
             else OutputD.push_back("-1");
         assertThrow(getHash(OutputD) == outputHash[batch]);
-        // cout << getHash(OutputCi) << endl;
+        // system("pause");
+        // cout << getHash(OutputD) << endl;
         for (int k = test = 0; test < nTest[batch]; ++k, ++test)
             if (OutputC[k] != "-1") assertThrow(InputS[test]
-                == InputA[test][stoi(OutputC[k])] +
-                InputA[test][stoi(OutputC[k + 1])]), ++k;
+                == InputA[test][stoi(OutputC[k]) - 1] +
+                InputA[test][stoi(OutputC[k + 1]) - 1]), ++k;
     }
     catch (...) {
         endBatch("WrongAnswer");
