@@ -163,8 +163,8 @@ int main(int argc, char** argv) {
     ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
     for (batch = 1; batch <= nBatch; errorCode = 0, total += weight[batch++]) {
         rng.seed(batch), cout << "Running on Batch " << batch << endl;
-        prepareInput(), start = chrono::high_resolution_clock::now();
-        runSolution(), finish = chrono::high_resolution_clock::now();
+        prepareInput(), start = chrono::system_clock::now();
+        runSolution(), finish = chrono::system_clock::now();
         if (errorCode == TLE) endBatch("TimeLimitExceeded");
         else if (errorCode) endBatch("RunTimeError");
         else if (validateOutput(), !errorCode && (endBatch("Accepted"),
