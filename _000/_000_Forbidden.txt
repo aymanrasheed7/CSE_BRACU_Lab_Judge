@@ -1,6 +1,8 @@
 open
 file
+creat(
 fstream
-process
 thread
-system
+process
+system(
+exec(
