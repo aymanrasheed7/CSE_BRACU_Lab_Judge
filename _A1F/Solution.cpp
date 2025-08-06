@@ -2,7 +2,7 @@
 using namespace std;
 int t, n, i, j, k, a[1008];
 int main() {
-    for (scanf("%d", &t); t--;) {// i = 0
+    for (scanf("%d", &t); t--; i = 0) {
         for (scanf("%d", &n); i != n; scanf("%d", a + i++));
         for (i = 0; i != n; ++i)
             for (j = i; 0 < j; --j)
