@@ -133,7 +133,6 @@ inline void validateOutput() {
             else OutputD.push_back("0");
         assertThrow(getHash(OutputD) == outputHash[batch]);
         // cout << getHash(OutputD) << endl;
-        // system("pause");
         for (int k = test = 0; test < nTest[batch]; ++k, ++test)
             if (OutputC[k] != "-1") assertThrow(InputS[test]
                 == InputA[test][stoi(OutputC[k]) - 1] +

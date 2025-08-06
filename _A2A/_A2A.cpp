@@ -128,7 +128,6 @@ inline void validateOutput() {
             if (word == "-1") OutputD.push_back("0");
             else OutputD.push_back("-1");
         assertThrow(getHash(OutputD) == outputHash[batch]);
-        // system("pause");
         // cout << getHash(OutputD) << endl;
         for (int k = test = 0; test < nTest[batch]; ++k, ++test)
             if (OutputC[k] != "-1") assertThrow(InputS[test]

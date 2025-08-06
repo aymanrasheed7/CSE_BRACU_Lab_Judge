@@ -136,7 +136,6 @@ inline void validateOutput() {
         for (ifstream fin("out.txt"); fin >> word; OutputC.push_back(word));
         assertThrow(getHash(OutputC) == outputHash[batch]);
         // cout << getHash(OutputC) << endl;
-        // system("pause");
     }
     catch (...) {
         endBatch("WrongAnswer");
