@@ -1,0 +1,45 @@
+Task:
+Given two integers A and B, find the remainder when A^B is divided by 107.
+
+Input:
+First line contains the number of tests. The description of each test follows.
+Each test is described by only one line containing two integers A and B.
+
+Output:
+For each test in the given order, print the answer you are asked to find in
+this task in one line.
+
+Example-1 (batch-1):
+Input (stdin):
+2
+100 3
+100 5
+Output (stdout):
+85
+99
+
+Example-2 (batch-2):
+Input (stdin):
+2
+105 1
+10000 1000000000000
+Output (stdout):
+105
+27
+
+Scoring:
+Batch   Score   Tests   Constraints
+1       0.1     2       1<=A<=1000, 1<=B<=10
+2       0.1     2       1<=A<=10000, 1<=B<=1000000000000
+3       0.2     1000    1<=A<=10000, 1<=B<=10000
+4       0.3     10000   1<=A<=10000, 1<=B<=100000000
+5       0.3     100000  1<=A<=10000, 1<=B<=1000000000000
+------------------------
+5      1       Total
+
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
+
+Hints:
+- Use fast input/output methods.
+- 0.2 score for passing only sample batches.
+- O(log(B)) solution is expected.
