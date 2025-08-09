@@ -151,12 +151,16 @@ inline void validateOutput() {
         int u, v, w;
         OutputH.clear();
         for (ifstream fin("out.txt"); fin >> word;)
-            if (word.back() == ':') word.pop_back(), OutputH.push_back(word),
-                stoi(word) == 1 ? (++test, u = 0) : 0,
-                assertThrow(stoi(word) == ++u);
-            else OutputH.push_back("0"),
-                stringstream(word) >> c >> v >> c >> w >> c,
-                OutputAM[test][u - 1][v - 1] = w;
+            if (word.back() == ':') {
+                word.pop_back(), OutputH.push_back(word);
+                if (word == "1") ++test, u = 0;
+                assertThrow(word == to_string(++u));
+            }
+            else if (word[0] == '(' && word.back() == ')') {
+                assertThrow(sscanf(word.c_str(), "(%d,%d)%c", &v, &w, &c) == 2);
+                OutputAM[test][u - 1][v - 1] = w, OutputH.push_back("0");
+            }
+            else assertThrow(0);
         assertThrow(InputAM == OutputAM);
         assertThrow(getHash(OutputH) == outputHash[batch]);
         // cout << getHash(OutputH) << endl;
