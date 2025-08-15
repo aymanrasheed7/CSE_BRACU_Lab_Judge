@@ -158,6 +158,8 @@ inline void validateOutput() {
             }
             else if (word[0] == '(' && word.back() == ')') {
                 assertThrow(sscanf(word.c_str(), "(%d,%d)%c", &v, &w, &c) == 2);
+                assertThrow(1 <= u && u <= OutputAM[test].size());
+                assertThrow(1 <= v && v <= OutputAM[test][u - 1].size());
                 OutputAM[test][u - 1][v - 1] = w, OutputH.push_back("0");
             }
             else assertThrow(0);
