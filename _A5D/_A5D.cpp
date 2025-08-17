@@ -105,7 +105,7 @@ inline void prepareInput() {
             int N = InputN[test] = getRandInt(2, maxN[batch]);
             int M = InputM[test] = getRandInt(1, maxM[batch]);
             InputU[test].resize(M), InputV[test].resize(M);
-            if (N * 1LL * N - N < M) M = N * N - N;
+            if (N * 1LL * N - N < M) M = InputM[test] = N * N - N;
             int S = InputS[test] = getRandInt(1, N);
             int D = InputD[test] = getRandInt(1, N);
             int K = InputK[test] = getRandInt(1, N);

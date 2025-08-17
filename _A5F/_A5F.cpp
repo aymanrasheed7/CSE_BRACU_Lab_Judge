@@ -96,7 +96,7 @@ inline void prepareInput() {
             int N = InputN[test] = getRandInt(2, maxN[batch]);
             int M = InputM[test] = getRandInt(1, maxM[batch]);
             InputU[test].resize(M), InputV[test].resize(M);
-            if (N * 1LL * N - N < M) M = N * N - N;
+            if (N * 1LL * N - N < M) M = InputM[test] = N * N - N;
             while (M--) {
                 int u = getRandInt(1, N), v = getRandInt(1, N);
                 if (u == v || InputE[test].find(make_pair(u, v))
