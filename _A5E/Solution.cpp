@@ -5,7 +5,7 @@ lll t, n, r, q, u, v, x, i, w[200008];
 vector<lll> a[200008];
 void dfs(lll p) {
     w[p] = 1;
-    for (auto& r : a[p]) if (!w[r]) dfs(r), w[p] += w[r];
+    for (auto& o : a[p]) if (!w[o]) dfs(o), w[p] += w[o];
 }
 int main() {
     for (scanf("%lld", &t); t--;) {
