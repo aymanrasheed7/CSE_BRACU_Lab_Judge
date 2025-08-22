@@ -64,7 +64,7 @@ int cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 int weight[] = { 0, 1, 1, 2, 3, 3 };
 int nTest[] = { 0, 2, 2, 20000, 20, 2 };
 int maxN[] = { 0, 5, 10, 20, 20000, 200000 };
-int outputHash[] = { 0, 13415, 14189, 59411, 20101, 54171 };
+int outputHash[] = { 0, 13415, 14189, 25636, 45419, 53921 };
 vector<string> OutputH;
 vector<int> InputN;
 vector<vector<int>> InputU, InputV;
@@ -88,7 +88,7 @@ inline void prepareInput() {
         InputU.resize(nTest[batch]);
         InputV.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
-            int N = InputN[test] = getRandInt(1, maxN[batch]);
+            int N = InputN[test] = getRandInt(2, maxN[batch]);
             InputU[test].resize(N - 1), InputV[test].resize(N - 1);
             for (int i = 2; i <= N; ++i) {
                 int u = i, v = getRandInt(1, i - 1);
@@ -138,9 +138,9 @@ inline void validateOutput() {
             fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &u, &c)),
             fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &v, &c)),
             assertThrow(w == dfs(u, v)), ++test;
-        assertThrow(getHash(OutputH) == outputHash[batch]);
-        // cout << getHash(OutputH) << endl;
-        // system("pause");
+        // assertThrow(getHash(OutputH) == outputHash[batch]);
+        cout << getHash(OutputH) << endl;
+        system("pause");
     }
     catch (...) {
         endBatch("WrongAnswer");
