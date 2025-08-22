@@ -64,10 +64,11 @@ int cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 int weight[] = { 0, 1, 1, 2, 3, 3 };
 int nTest[] = { 0, 2, 2, 20000, 20, 2 };
 int maxN[] = { 0, 5, 10, 20, 20000, 200000 };
-int outputHash[] = { 0, 13155, 8795, 1212, 11274, 36442 };
+int outputHash[] = { 0, 13415, 14189, 59411, 20101, 54171 };
 vector<string> OutputH;
 vector<int> InputN;
 vector<vector<int>> InputU, InputV;
+vector<vector<vector<int>>> InputA;
 inline int getRandInt(int low, int high) {
     return uniform_int_distribution<int>(low, high)(rng);
 }
@@ -97,10 +98,14 @@ inline void prepareInput() {
         }
     }
     ofstream fout("in.txt");
+    InputA.resize(nTest[batch]);
     for (fout << nTest[batch] << "\n", test = 0; test < nTest[batch]; ++test) {
-        fout << InputN[test] << "\n";
+        fout << InputN[test] << "\n", InputA[test].resize(InputN[test] + 1);
+        for (int i = 0; i < InputN[test]; InputA[test][++i].clear());
         for (int i = 0; i < InputN[test] - 1; ++i)
-            fout << InputU[test][i] << " " << InputV[test][i] << "\n";
+            fout << InputU[test][i] << " " << InputV[test][i] << "\n",
+            InputA[test][InputU[test][i]].push_back(InputV[test][i]),
+            InputA[test][InputV[test][i]].push_back(InputU[test][i]);
     }
     fout.close();
 }
@@ -116,10 +121,23 @@ inline int getHash(vector<string> vec, int ret = 0) {
 inline void assertThrow(bool condition) {
     if (!condition) throw exception();
 }
+int dfs(int p, int q, int r = 0) {
+    if (p == q) return 0;
+    int s = InputN[test];
+    for (auto& o : InputA[test][p]) if (o != r) s = min(s, 1 + dfs(o, q, p));
+    return s;
+}
 inline void validateOutput() {
     try {
+        char c;
+        test = 0;
+        int u, v, w;
         OutputH.clear();
-        for (ifstream fin("out.txt"); fin >> word; OutputH.push_back(word));
+        for (ifstream fin("out.txt"); fin >> word;) OutputH.push_back(word),
+            assertThrow(1 == sscanf(word.c_str(), "%d%c", &w, &c)),
+            fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &u, &c)),
+            fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &v, &c)),
+            assertThrow(w == dfs(u, v)), ++test;
         assertThrow(getHash(OutputH) == outputHash[batch]);
         // cout << getHash(OutputH) << endl;
         // system("pause");
