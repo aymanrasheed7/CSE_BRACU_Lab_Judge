@@ -56,6 +56,7 @@ inline void updateSubmission() {
     cout << "Submission updated: " << TID + "_" + UID + "." + LNG << endl;
 }
 inline void printScoreAndExit() {
+    if (best <= score) updateSubmission();
     cout << "\nTentative score = " << double(score) / max(total, 1) << "/1\n\n";
     exit(0);
 }
