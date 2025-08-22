@@ -63,9 +63,9 @@ inline void printScoreAndExit() {
 int cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 int weight[] = { 0, 1, 1, 2, 3, 3 };
 int nTest[] = { 0, 2, 2, 20000, 20, 2 };
-int maxN[] = { 0, 10, 10, 20, 20000, 200000 };
-int maxM[] = { 0, 10, 10, 20, 20000, 200000 };
-int outputHash[] = { 0, 62084, 49907, 61246, 7448, 30668 };
+int maxN[] = { 0, 10, 20, 20, 20000, 200000 };
+int maxM[] = { 0, 10, 20, 30, 30000, 300000 };
+int outputHash[] = { 0, 62084, 49907, 60129, 43986, 19786 };
 vector<string> OutputH;
 vector<int> InputN, InputM, InputS, InputQ;
 vector<set<pair<int, int>>> InputE;
