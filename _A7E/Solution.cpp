@@ -16,7 +16,7 @@ int main() {
         for (x[0][1] = x[1][1] = 0, q.push(make_tuple(0, 0, 1)),
             q.push(make_tuple(0, 1, 1)); !q.empty();)
             if (tie(w, i, m) = q.top(), q.pop(), w = -w, w == x[i][m])
-                for (auto& z : a[m]) if (!((i ^ z.first) & 1)
+                for (auto& z : a[m]) if (((i ^ z.first) & 1)
                     && x[i][m] + z.first < x[i ^ 1][z.second])
                     q.push(make_tuple(-(x[i ^ 1][z.second] =
                         x[i][m] + z.first), i ^ 1, z.second));

@@ -66,7 +66,7 @@ int nTest[] = { 0, 2, 2, 2000, 20, 2 };
 int maxN[] = { 0, 10, 10, 20, 10000, 100000 };
 int maxM[] = { 0, 10, 10, 30, 15000, 150000 };
 int maxW[] = { 0, 10, 10, 100, 10000, 1000000 };
-int outputHash[] = { 0, 13159, 26006, 19920, 20069, 41378 };
+int outputHash[] = { 0, 13159, 26006, 38836, 15056, 10772 };
 vector<string> OutputH;
 vector<set<pair<int, int>>> InputE;
 vector<int> InputN, InputM;
@@ -103,10 +103,13 @@ inline void prepareInput() {
             if (N * 1LL * N - N < M) M = InputM[test] = N * N - N;
             InputU[test].resize(M), InputV[test].resize(M);
             InputW[test].resize(M);
-            if (1 & getRandInt(0, 1)) --M,
-                InputU[test][M] = 1, InputV[test][M] = N,
-                InputW[test][M] = getRandInt(1, maxW[batch]),
-                InputE[test].insert(make_pair(1, N));
+            if ((1 & getRandInt(0, 1)) && 2 < N && 1 < M) --M,
+                InputU[test][M] = 1, InputV[test][M] = 2,
+                InputW[test][M] = getRandInt(2, maxW[batch] - 1),
+                InputE[test].insert(make_pair(1, 2)), --M,
+                InputU[test][M] = 2, InputV[test][M] = N,
+                InputW[test][M] = InputW[test][M + 1] ^ 1,
+                InputE[test].insert(make_pair(2, N));
             while (M--) {
                 int u = getRandInt(1, N), v = getRandInt(1, N);
                 if (u == v || InputE[test].find(make_pair(u, v))
