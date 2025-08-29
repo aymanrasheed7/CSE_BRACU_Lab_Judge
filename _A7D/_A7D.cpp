@@ -63,10 +63,10 @@ inline void printScoreAndExit() {
 int cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 int weight[] = { 0, 1, 1, 2, 3, 3 };
 int nTest[] = { 0, 2, 2, 2000, 20, 2 };
-int maxN[] = { 0, 10, 10, 20, 20000, 200000 };
-int maxM[] = { 0, 10, 10, 30, 30000, 300000 };
+int maxN[] = { 0, 10, 10, 20, 10000, 100000 };
+int maxM[] = { 0, 10, 10, 30, 15000, 150000 };
 int maxW[] = { 0, 10, 10, 100, 10000, 1000000 };
-int outputHash[] = { 0, 25749, 38507, 59048, 32306, 10367 };
+int outputHash[] = { 0, 25749, 38507, 13312, 6382, 8308 };
 vector<string> OutputH;
 vector<set<pair<int, int>>> InputE;
 vector<int> InputN, InputM, InputS, InputD;
@@ -107,12 +107,15 @@ inline void prepareInput() {
             int N = InputN[test] = getRandInt(2, maxN[batch]);
             int M = InputM[test] = getRandInt(1, maxM[batch]);
             if (N * 1LL * N - N < M) M = InputM[test] = N * N - N;
+            InputU[test].resize(M), InputV[test].resize(M);
             InputW[test].resize(N);
             for (int i = 0; i < N; ++i)
                 InputW[test][i] = getRandInt(1, maxW[batch]);
-            InputU[test].resize(M), InputV[test].resize(M);
             int S = InputS[test] = getRandInt(1, N);
             int D = InputD[test] = getRandInt(1, N);
+            if (1 & getRandInt(0, 1)) --M,
+                InputU[test][M] = S, InputV[test][M] = D,
+                InputE[test].insert(make_pair(S, D));
             while (M--) {
                 int u = getRandInt(1, N), v = getRandInt(1, N);
                 if (u == v || InputE[test].find(make_pair(u, v))

@@ -11,9 +11,9 @@ int main() {
             i++ != n; scanf("%lld", w + i), x[i] = 1e18, a[i].clear());
         for (i = 0; i != m; scanf("%lld%lld", &u, &v), a[u].push_back(v), ++i);
         for (x[s] = w[s], q.push(make_pair(-x[s], s)); !q.empty();)
-            if (v = -q.top().first, u = q.top().second, q.pop(), v == x[u])
-                for (auto& z : a[u]) if (x[u] + w[z] < x[z])
-                    x[z] = x[u] + w[z], q.push(make_pair(-x[z], z));
+            if (tie(v, u) = q.top(), q.pop(), v = -v, v == x[u])
+                for (auto& z : a[u]) if (v + w[z] < x[z])
+                    x[z] = v + w[z], q.push(make_pair(-x[z], z));
     }
     exit(0);
 }
