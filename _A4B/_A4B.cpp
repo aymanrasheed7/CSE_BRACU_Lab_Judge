@@ -1,6 +1,7 @@
 #include<bits/extc++.h>
 #include<windows.h>
 using namespace std;
+using lll = long long;
 mt19937 rng;
 chrono::system_clock::time_point start, finish;
 int test = 0, best = 0, score = 0, batch = 0, total = 0, timeLimit = 0;
