@@ -2,12 +2,12 @@
 #include<windows.h>
 using namespace std;
 using lll = long long;
-mt19937 rng;
-chrono::system_clock::time_point start, finish;
-int test = 0, best = 0, score = 0, batch = 0, total = 0, timeLimit = 0;
-string TID, UID, LNG, comment, content, word;
+lll test = 0, batch = 0, timeLimit = 0;
 DWORD TLE = 9, errorCode = 0;
-char cmd[64];
+double best = 0, score = 0;
+mt19937_64 rng;
+chrono::system_clock::time_point start, finish;
+string TID, UID, LNG, cmd, word, content, comment;
 inline void runSolution() {
     PROCESS_INFORMATION processInfo;
     STARTUPINFOA startupInfo = { sizeof(STARTUPINFOA) };
@@ -25,7 +25,7 @@ inline void runSolution() {
     HANDLE hJob = CreateJobObject(NULL, NULL);
     if (!hJob)
         return (void)(cout << "Failed to CreateJobObject()\n", errorCode = -1);
-    if (!CreateProcessA(NULL, cmd, NULL, NULL, TRUE,
+    if (!CreateProcessA(NULL, (LPSTR)cmd.c_str(), NULL, NULL, TRUE,
         CREATE_SUSPENDED, NULL, NULL, &startupInfo, &processInfo))
         return (void)(cout << "Failed to CreateProcessA()\n", errorCode = -1);
     if (!AssignProcessToJobObject(hJob, processInfo.hProcess)) {
@@ -58,21 +58,21 @@ inline void updateSubmission() {
 }
 inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
-    cout << "\nTentative score = " << double(score) / max(total, 1) << "/1\n\n";
+    cout << "\nTentative score = " << score << "/1\n\n";
     exit(0);
 }
-int cpp = 1000, java = 1500, py = 3000, nBatch = 5;
-int weight[] = { 0, 1, 1, 2, 3, 3 };
-int nTest[] = { 0, 2, 2, 10000, 400, 100 };
-int maxN[] = { 0, 5, 5, 10, 50, 100 };
-int maxW[] = { 0, 10, 100, 1000, 1000, 1000 };
-int outputHash[] = { 0, 12820, 16922, 9436, 62660, 58534 };
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
+lll weight[] = { 0, 1, 1, 2, 3, 3 };
+lll nTest[] = { 0, 2, 2, 10000, 400, 100 };
+lll maxN[] = { 0, 5, 5, 10, 50, 100 };
+lll maxW[] = { 0, 10, 100, 1000, 1000, 1000 };
+lll outputHash[] = { 0, 12820, 16922, 9436, 62660, 58534 };
 vector<string> OutputH;
-vector<int> InputN, InputM;
-vector<vector<int>> InputU, InputV, InputW;
-vector<vector<vector<int>>> InputAM, OutputAM;
-inline int getRandInt(int low, int high) {
-    return uniform_int_distribution<int>(low, high)(rng);
+vector<lll> InputN, InputM;
+vector<vector<lll>> InputU, InputV, InputW;
+vector<vector<vector<lll>>> InputAM, OutputAM;
+inline lll getRandInt(lll low, lll high) {
+    return uniform_int_distribution<lll>(low, high)(rng);
 }
 inline void prepareInput() {
     if (batch == 1) {
@@ -97,17 +97,17 @@ inline void prepareInput() {
         InputW.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
             InputU[test].clear(), InputV[test].clear(), InputW[test].clear();
-            int N = InputN[test] = getRandInt(1, maxN[batch]);
-            int K = N * N - N, M = getRandInt(0, K);
-            for (int i = 0; i < N; ++i)
-                for (int j = 0; j < N; ++j)
+            lll N = InputN[test] = getRandInt(1, maxN[batch]);
+            lll K = N * N - N, M = getRandInt(0, K);
+            for (lll i = 0; i < N; ++i)
+                for (lll j = 0; j < N; ++j)
                     if (i != j && M < getRandInt(1, K))
                         InputU[test].push_back(i + 1),
                         InputV[test].push_back(j + 1),
                         InputW[test].push_back(getRandInt(1, maxW[batch]));
             InputM[test] = M = InputW[test].size();
-            for (int k = 3; k--;)
-                for (int i = 1, j; i < M; ++i)
+            for (lll k = 3; k--;)
+                for (lll i = 1, j; i < M; ++i)
                     j = getRandInt(0, i - 1),
                     swap(InputU[test][i], InputU[test][j]),
                     swap(InputV[test][i], InputV[test][j]),
@@ -119,27 +119,27 @@ inline void prepareInput() {
     OutputAM.resize(nTest[batch]);
     for (fout << nTest[batch] << "\n", test = 0; test < nTest[batch]; ++test) {
         fout << InputN[test] << " " << InputM[test] << "\n";
-        InputAM[test] = OutputAM[test] = vector<vector<int>>(InputN[test],
-            vector<int>(InputN[test], 0));
+        InputAM[test] = OutputAM[test] = vector<vector<lll>>(InputN[test],
+            vector<lll>(InputN[test], 0));
         if (!InputM[test]) fout << "\n\n\n";
-        for (int i = 0; i < InputM[test]; ++i)
+        for (lll i = 0; i < InputM[test]; ++i)
             fout << InputU[test][i] << (i + 1 == InputM[test] ? "\n" : " ");
-        for (int i = 0; i < InputM[test]; ++i)
+        for (lll i = 0; i < InputM[test]; ++i)
             fout << InputV[test][i] << (i + 1 == InputM[test] ? "\n" : " ");
-        for (int i = 0; i < InputM[test]; ++i)
+        for (lll i = 0; i < InputM[test]; ++i)
             fout << InputW[test][i] << (i + 1 == InputM[test] ? "\n" : " ");
-        for (int i = 0; i < InputM[test]; ++i)
+        for (lll i = 0; i < InputM[test]; ++i)
             InputAM[test][InputU[test][i] - 1][InputV[test][i] - 1]
             = InputW[test][i];
     }
     fout.close();
 }
-int base = 257, mod = 65537;
-inline int getHash(string str, int ret = 0) {
-    for (auto& c : str) ret = (ret * base + int(c)) % mod;
+lll base = 257, mod = 65537;
+inline lll getHash(string str, lll ret = 0) {
+    for (auto& c : str) ret = (ret * base + lll(c)) % mod;
     return ret;
 }
-inline int getHash(vector<string> vec, int ret = 0) {
+inline lll getHash(vector<string> vec, lll ret = 0) {
     for (auto& str : vec) ret = (ret * base + getHash(str)) % mod;
     return ret;
 }
@@ -150,7 +150,7 @@ inline void validateOutput() {
     try {
         char c;
         test = -1;
-        int u, v, w;
+        lll u, v, w;
         OutputH.clear();
         for (ifstream fin("out.txt"); fin >> word;)
             if (word.back() == ':') {
@@ -176,10 +176,10 @@ inline void validateOutput() {
 }
 int main(int argc, char** argv) {
     TID = argv[1], UID = argv[2], LNG = argv[3];
-    if (LNG == "cpp") timeLimit = cpp, strcpy(cmd, "b.exe");
-    else if (LNG == "java") timeLimit = java, strcpy(cmd, "java Solution");
+    if (LNG == "cpp") timeLimit = cpp, cmd = "b.exe";
+    else if (LNG == "java") timeLimit = java, cmd = "java Solution";
     if (LNG != "py") comment = "// ";
-    else comment = "## ", timeLimit = py, strcpy(cmd, "pypy Solution.py");
+    else comment = "## ", timeLimit = py, cmd = "pypy Solution.py";
     if (!ifstream(TID + "_" + UID + "." + LNG)) updateSubmission();
     getline(ifstream("Solution." + LNG), content, '\0');
     for (char& c : content) c = tolower(c);
@@ -193,7 +193,7 @@ int main(int argc, char** argv) {
     for (string& s : vector<string>({ "RunTimeError",
         "TimeLimitExceeded", "WrongAnswer" })) ofstream(s + ".txt").close();
     ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
-    for (batch = 1; batch <= nBatch; errorCode = 0, total += weight[batch++]) {
+    for (batch = 1; batch <= nBatch; errorCode = 0, ++batch) {
         rng.seed(batch), cout << "Running on Batch " << batch << endl;
         prepareInput(), start = chrono::system_clock::now();
         runSolution(), finish = chrono::system_clock::now();
