@@ -2,19 +2,12 @@
 using namespace std;
 int main(int argc, char** argv) {
     string OLD = R"d(
-lll test = 0, batch = 0, TLM = 0;
-DWORD TLE = 9, errorCode = 0;
-double best = 0, score = 0;
-mt19937_64 RNG;
-chrono::system_clock::time_point start, finish;
-string TID, UID, LNG, CMD, word, content, CMT;)d";
+    for (batch = 1; batch <= nBatch; score += weight[batch++]);
+    assert(score = 1), score = 0;
+    for (batch = 1; batch <= nBatch; errorCode = 0, ++batch) {)d";
     string NEW = R"d(
-lll TLM = 0, test = 0, batch = 0;
-DWORD TLE = 9, errorCode = 0;
-double best = 0, score = 0;
-mt19937_64 RNG;
-chrono::system_clock::time_point start, finish;
-string TID, UID, LNG, CMD, CMT, word, content;)d";
+    for (batch = score = 1; batch <= nBatch; score -= weight[batch++]);
+    for (assert(!score), batch = 1; batch <= nBatch; errorCode = 0, ++batch) {)d";
     string content;
     getline(ifstream(argv[1]), content, '\0');
     for (size_t i = 0; (i = content.find(OLD, i)) != string::npos;)

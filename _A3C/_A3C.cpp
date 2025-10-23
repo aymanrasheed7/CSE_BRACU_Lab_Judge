@@ -57,13 +57,13 @@ inline void updateSubmission() {
     cout << "Submission updated: " << TID + "_" + UID + "." + LNG << endl;
 }
 inline void printScoreAndExit() {
+    cout.unsetf(ios::fixed);
     if (best <= score) updateSubmission();
-    cout << "\nTentative score = " << score << "/1\n\n";
-    exit(0);
+    cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 long long tn4 = 10000, tn8 = tn4 * tn4;
-lll weight[] = { 0, 1, 1, 2, 3, 3 };
+double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 1000, 10000, 100000 };
 lll maxA[] = { 0, 1000, 10000, 10000, 10000, 10000 };
 long long maxB[] = { 0, 10, tn4 * tn8, tn4, tn8, tn4 * tn8 };
@@ -142,7 +142,8 @@ int main(int argc, char** argv) {
     for (string& s : vector<string>({ "RunTimeError",
         "TimeLimitExceeded", "WrongAnswer" })) ofstream(s + ".txt").close();
     ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
-    for (batch = 1; batch <= nBatch; errorCode = 0, ++batch) {
+    for (batch = score = 1; batch <= nBatch; score -= weight[batch++]);
+    for (assert(!score), batch = 1; batch <= nBatch; errorCode = 0, ++batch) {
         RNG.seed(batch), cout << "Running on Batch " << batch << endl;
         prepareInput(), start = chrono::system_clock::now();
         runSolution(), finish = chrono::system_clock::now();
@@ -151,5 +152,5 @@ int main(int argc, char** argv) {
         else if (validateOutput(), !errorCode && (endBatch("Accepted"),
             best <= (score += weight[batch]))) updateSubmission();
     }
-    cout.unsetf(ios::fixed), printScoreAndExit();
+    printScoreAndExit();
 }
