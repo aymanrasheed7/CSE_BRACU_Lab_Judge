@@ -57,14 +57,14 @@ inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
     cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
-lll cpp = 1000, java = 2000, py = 2000, nBatch = 5;
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
-lll nTest[] = { 0, 1, 2, 100, 100, 10 };
-lll maxN[] = { 0, 7, 5, 10, 100, 1000 };
+lll nTest[] = { 0, 1, 2, 100, 100, 100 };
+lll maxN[] = { 0, 7, 4, 20, 100, 1000 };
 lll maxAi[] = { 0, 10, 10, 1000, 1000, 1000 };
 lll maxBi[] = { 0, 100, 100, 1000, 1000, 1000 };
-lll hsh[] = { 0, 31283, 18490, 27804, 47097, 36270 };
-vector<string> OutputCi;
+lll hsh[] = { 0, 1150353440, 339734312, 820222770, 696998987, 765262361 };
+vector<string> OutputH;
 vector<lll> InputN;
 vector<vector<lll>> InputA, InputB;
 inline lll getRandInt(lll low, lll high) {
@@ -76,8 +76,8 @@ inline void prepareInput() {
         InputB = { {40, 50, 50, 20, 10, 10, 10} };
     }
     else if (batch == 2) {
-        InputA = { {7, 2, 5, 3}, {1} };
-        InputB = { {80, 60, 80, 50}, {1} };
+        InputA = { {7, 2, 5, 3}, { 1, 2, 3 } };
+        InputB = { {80, 60, 80, 50}, { 40, 59, 10 } };
     }
     else {
         InputN.resize(nTest[batch]);
@@ -106,7 +106,7 @@ inline void prepareInput() {
     }
     fout.close();
 }
-lll base = 257, mod = 65537;
+lll base = 257, mod = 2147483647;
 inline lll getHash(string str, lll ret = 0) {
     for (auto& c : str) ret = (ret * base + lll(c)) % mod;
     return ret;
@@ -120,11 +120,10 @@ inline void assertThrow(bool condition) {
 }
 inline void validateOutput() {
     try {
-        OutputCi.clear();
-        for (ifstream fin(out); fin >> word; OutputCi.push_back(word));
-        assertThrow(getHash(OutputCi) == hsh[batch]);
-        // cout << getHash(OutputCi) << endl;
-        // system("pause");
+        OutputH.clear();
+        for (ifstream fin(out); fin >> word; OutputH.push_back(word));
+        assertThrow(getHash(OutputH) == hsh[batch]);
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");
