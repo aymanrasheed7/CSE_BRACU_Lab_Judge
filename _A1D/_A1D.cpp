@@ -62,7 +62,8 @@ double weight[] = { 0, 0.2, 0.2, 0.2, 0.2, 0.2 };
 lll nTest[] = { 0, 3, 10, 20, 50, 100 };
 lll maxN[] = { 0, 4, 10, 100, 1000, 10000 };
 lll maxAi[] = { 0, 10, 1000, 10000, 100000, 1000000 };
-vector<string> OutputYN;
+lll hsh[] = { 0, 753122868, 1936189279, 424263184, 2004315339, 1219533907 };
+vector<string> OutputH;
 vector<lll> InputN;
 vector<vector<lll>> InputA;
 inline lll getRandInt(lll low, lll high) {
@@ -95,18 +96,24 @@ inline void prepareInput() {
     }
     fout.close();
 }
+lll base = 257, mod = 2147483647;
+inline lll getHash(string str, lll ret = 0) {
+    for (auto& c : str) ret = (ret * base + lll(c)) % mod;
+    return ret;
+}
+inline lll getHash(vector<string> vec, lll ret = 0) {
+    for (auto& str : vec) ret = (ret * base + getHash(str)) % mod;
+    return ret;
+}
 inline void assertThrow(bool condition) {
     if (!condition) throw exception();
 }
 inline void validateOutput() {
     try {
-        OutputYN.clear();
-        for (ifstream fin(out); fin >> word; OutputYN.push_back(word))
-            assertThrow(word == "YES" || word == "NO");
-        assertThrow(OutputYN.size() == nTest[batch]);
-        for (test = 0; test < nTest[batch]; ++test)
-            assertThrow(is_sorted(InputA[test].begin(), InputA[test].end())
-                ^ (OutputYN[test] == "NO"));
+        OutputH.clear();
+        for (ifstream fin(out); fin >> word; OutputH.push_back(word));
+        assertThrow(getHash(OutputH) == hsh[batch]);
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");
