@@ -7,52 +7,35 @@ Each test is described by two lines. First line contains N, the number of
 integers in the list. Second line contains the integers A[i] of the list.
 
 Output:
-For each test in the given order, print a string "YES" or "NO" exactly,
-the answer you are asked to find in this task.
-Separate the answers by any whitespace character.
+For each test in the given order, print a string "YES" or "NO" in one line.
 
 Example-1 (batch-1):
 Input (stdin):
-2
-2
-2 3
-2
-3 2
-Output (stdout):
-YES NO
-
-Example-2 (batch-2):
-Input (stdin):
 3
+4
+1 2 3 3
+4
+1 5 2 6
+1
 5
-4 5 8 8 9
-3
-6 -7 2
-2
-8 90
 Output (stdout):
-YES NO YES
-Alternate Output (stdout):
-YES NO
+YES
+NO
 YES
 
 Scoring:
 Batch   Score   Tests   Constraints
-1       0.1     2       N=2, max(abs(A[i]))<=10
-2       0.1     3       N<=5, max(abs(A[i]))<=100
-3       0.1     20000   N<=5, max(abs(A[i]))<=1000000000
-4       0.1     10000   N<=20, max(abs(A[i]))<=1000000000
-5       0.1     1000    N<=200, max(abs(A[i]))<=1000000000
-6       0.1     100     N<=2000, max(abs(A[i]))<=1000000000
-7       0.2     10      N<=20000, max(abs(A[i]))<=1000000000
-8       0.2     5       N<=40000, max(abs(A[i]))<=1000000000
+1       0.2     3       1<=N<=4, 1<=A[i]<=10
+2       0.2     10      1<=N<=10, 1<=A[i]<=1000
+3       0.2     20      1<=N<=100, 1<=A[i]<=10000
+4       0.2     50      1<=N<=1000, 1<=A[i]<=100000
+5       0.2     100     1<=N<=10000, 1<=A[i]<=1000000
 ------------------------
-8       1       Total
+5       1       Total
 
-Time limit: 1s (cpp) or 2s (java) or 2s (py) per batch.
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
 
 Hints:
 - Use fast input/output methods.
 - 0.2 score for passing only sample batches.
-- around 0.5 score for correct and fast O(N^2) solution.
 - Correct and fast O(N*log(N)) or better solution for full score.

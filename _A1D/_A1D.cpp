@@ -57,11 +57,11 @@ inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
     cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
-lll cpp = 1000, java = 2000, py = 2000, nBatch = 8, tn9 = 1000000000;
-double weight[] = { 0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2 };
-lll nTest[] = { 0, 2, 3, 20000, 10000, 1000, 100, 10, 5 };
-lll maxN[] = { 0, 2, 5, 5, 20, 200, 2000, 20000, 40000 };
-lll maxAB[] = { 0, 10, 100, tn9, tn9, tn9, tn9, tn9, tn9 };
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
+double weight[] = { 0, 0.2, 0.2, 0.2, 0.2, 0.2 };
+lll nTest[] = { 0, 3, 10, 20, 50, 100 };
+lll maxN[] = { 0, 4, 10, 100, 1000, 10000 };
+lll maxAi[] = { 0, 10, 1000, 10000, 100000, 1000000 };
 vector<string> OutputYN;
 vector<lll> InputN;
 vector<vector<lll>> InputA;
@@ -70,10 +70,7 @@ inline lll getRandInt(lll low, lll high) {
 }
 inline void prepareInput() {
     if (batch == 1) {
-        InputA = { {2, 3}, {3, 2} };
-    }
-    else if (batch == 2) {
-        InputA = { {4, 5, 8, 8, 9}, {6, -7, 2}, {8, 90} };
+        InputA = { {1, 2, 3, 3}, {1, 5, 2, 6}, {5} };
     }
     else {
         InputN.resize(nTest[batch]);
@@ -82,7 +79,7 @@ inline void prepareInput() {
             InputN[test] = getRandInt(1, maxN[batch]);
             InputA[test].resize(InputN[test]);
             for (lll i = 0; i < InputN[test]; ++i)
-                InputA[test][i] = getRandInt(-maxAB[batch], maxAB[batch]);
+                InputA[test][i] = getRandInt(1, maxAi[batch]);
             if (getRandInt(0, 1) & 1)
                 sort(InputA[test].begin(), InputA[test].end());
         }
