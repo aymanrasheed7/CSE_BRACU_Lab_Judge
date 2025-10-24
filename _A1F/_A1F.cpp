@@ -62,7 +62,8 @@ double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 1, 3, 4000, 200, 10 };
 lll maxN[] = { 0, 14, 10, 20, 100, 1000 };
 lll maxAi[] = { 0, 14, 10, 1000, 100000, 1000000 };
-vector<string> OutputBi;
+lll hsh[] = { 0, 1299671870, 1089750209, 1391429034, 114610448, 1380034614 };
+vector<string> OutputH;
 vector<lll> InputN;
 vector<vector<lll>> InputA;
 inline lll getRandInt(lll low, lll high) {
@@ -96,25 +97,24 @@ inline void prepareInput() {
     }
     fout.close();
 }
+lll base = 257, mod = 2147483647;
+inline lll getHash(string str, lll ret = 0) {
+    for (auto& c : str) ret = (ret * base + lll(c)) % mod;
+    return ret;
+}
+inline lll getHash(vector<string> vec, lll ret = 0) {
+    for (auto& str : vec) ret = (ret * base + getHash(str)) % mod;
+    return ret;
+}
 inline void assertThrow(bool condition) {
     if (!condition) throw exception();
 }
 inline void validateOutput() {
     try {
-        OutputBi.clear();
-        for (ifstream fin(out); fin >> word; OutputBi.push_back(word))
-            assertThrow(1 == sscanf(word.c_str(), "%lld%*c", &test));
-        assertThrow(OutputBi.size() ==
-            accumulate(InputN.begin(), InputN.end(), 0));
-        for (lll k = test = 0; test < nTest[batch]; ++test) {
-            for (lll j = 0, i = 0; i < InputN[test];) {
-                for (j = i; j < InputN[test] &&
-                    (InputA[test][j] ^ InputA[test][i] ^ 1) & 1; ++j);
-                sort(InputA[test].begin() + i, InputA[test].begin() + j);
-                for (; i < j; ++i)
-                    assertThrow(InputA[test][i] == stoi(OutputBi[k++]));
-            }
-        }
+        OutputH.clear();
+        for (ifstream fin(out); fin >> word; OutputH.push_back(word));
+        assertThrow(getHash(OutputH) == hsh[batch]);
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");
