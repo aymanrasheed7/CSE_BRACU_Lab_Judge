@@ -61,7 +61,8 @@ lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.2, 0.2, 0.2, 0.2, 0.2 };
 lll nTest[] = { 0, 5, 10, 100, 1000, 10000 };
 lll maxN[] = { 0, 100, 1000, 10000, 100000, 1000000 };
-vector<string> OutputS;
+lll hsh[] = { 0, 869668104, 1440080540, 1337008759, 1416296258, 767982636 };
+vector<string> OutputH;
 vector<lll> InputN;
 inline lll getRandInt(lll low, lll high) {
     return uniform_int_distribution<lll>(low, high)(RNG);
@@ -83,17 +84,24 @@ inline void prepareInput() {
     }
     fout.close();
 }
+lll base = 257, mod = 2147483647;
+inline lll getHash(string str, lll ret = 0) {
+    for (auto& c : str) ret = (ret * base + lll(c)) % mod;
+    return ret;
+}
+inline lll getHash(vector<string> vec, lll ret = 0) {
+    for (auto& str : vec) ret = (ret * base + getHash(str)) % mod;
+    return ret;
+}
 inline void assertThrow(bool condition) {
     if (!condition) throw exception();
 }
 inline void validateOutput() {
     try {
-        OutputS.clear();
-        for (ifstream fin(out); fin >> word; OutputS.push_back(word))
-            assertThrow(1 == sscanf(word.c_str(), "%lld%*c", &test));
-        assertThrow(OutputS.size() == nTest[batch]);
-        for (test = 0; test < nTest[batch]; ++test) assertThrow((InputN[test]
-            * (InputN[test] + 1LL) >> 1) == stoll(OutputS[test]));
+        OutputH.clear();
+        for (ifstream fin(out); fin >> word; OutputH.push_back(word));
+        assertThrow(getHash(OutputH) == hsh[batch]);
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");
