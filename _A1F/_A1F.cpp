@@ -57,11 +57,11 @@ inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
     cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
-lll cpp = 1000, java = 2000, py = 2000, nBatch = 10, tn6 = 1000000;
-double weight[] = { 0, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2 };
-lll nTest[] = { 0, 1, 1, 2, 100000, 25000, 4000, 1000, 250, 40, 10 };
-lll maxN[] = { 0, 7, 14, 5, 10, 20, 50, 100, 200, 500, 1000 };
-lll maxAi[] = { 0, 10, 100, tn6, tn6, tn6, tn6, tn6, tn6, tn6, tn6 };
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
+double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
+lll nTest[] = { 0, 1, 3, 4000, 200, 10 };
+lll maxN[] = { 0, 14, 10, 20, 100, 1000 };
+lll maxAi[] = { 0, 14, 10, 1000, 100000, 1000000 };
 vector<string> OutputBi;
 vector<lll> InputN;
 vector<vector<lll>> InputA;
@@ -70,13 +70,10 @@ inline lll getRandInt(lll low, lll high) {
 }
 inline void prepareInput() {
     if (batch == 1) {
-        InputA = { {4, 2, 4, 7, 1, 6, 1} };
-    }
-    else if (batch == 2) {
         InputA = { {4, 8, 2, 9, 1, 5, 4, 6, 8, 1, 7, 13, 11, 8} };
     }
-    else if (batch == 3) {
-        InputA = { {3, 5, 9, 7, 1}, {221} };
+    else if (batch == 2) {
+        InputA = { {4, 2, 4, 7, 1, 6, 1}, {3, 5, 9, 7, 1}, {221} };
     }
     else {
         InputN.resize(nTest[batch]);
@@ -106,11 +103,10 @@ inline void validateOutput() {
     try {
         OutputBi.clear();
         for (ifstream fin(out); fin >> word; OutputBi.push_back(word))
-            stoi(word);
+            assertThrow(1 == sscanf(word.c_str(), "%lld%*c", &test));
         assertThrow(OutputBi.size() ==
             accumulate(InputN.begin(), InputN.end(), 0));
-        lll k = 0;
-        for (test = 0; test < nTest[batch]; ++test) {
+        for (lll k = test = 0; test < nTest[batch]; ++test) {
             for (lll j = 0, i = 0; i < InputN[test];) {
                 for (j = i; j < InputN[test] &&
                     (InputA[test][j] ^ InputA[test][i] ^ 1) & 1; ++j);

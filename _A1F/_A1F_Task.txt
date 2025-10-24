@@ -12,19 +12,10 @@ Each test is described by two lines. First line contains N, the number of
 integers in the list. Second line contains the integers A[i] of the list.
 
 Output:
-For each test in the given order, print the integers of the list you are asked
-to find in this task in one separate line.
-Separate the integers of a list by spaces.
+For each test in the given order, print some space separated integers in the
+same order of the list you are asked to find in this task in one separate line.
 
 Example-1 (batch-1):
-Input (stdin):
-1
-7
-4 2 4 7 1 6 1
-Output (stdout):
-2 4 4 1 7 6 1
-
-Example-2 (batch-2):
 Input (stdin):
 1
 14
@@ -32,33 +23,31 @@ Input (stdin):
 Output (stdout):
 2 4 8 1 5 9 4 6 8 1 7 11 13 8
 
-Example-3 (batch-3):
+Example-2 (batch-2):
 Input (stdin):
-2
+1
+7
+4 2 4 7 1 6 1
 5
 3 5 9 7 1
 1
 221
 Output (stdout):
+2 4 4 1 7 6 1
 1 3 5 7 9
 221
 
 Scoring:
 Batch   Score   Tests   Constraints
-1       0.05    1       N=7, 1<=A[i]<=10
-2       0.05    1       N=14, 1<=A[i]<=100
-3       0.1     2       1<=N<=5, 1<=A[i]<=1000
-4       0.1     100000  1<=N<=10, 1<=A[i]<=1000000
-5       0.1     25000   1<=N<=20, 1<=A[i]<=1000000
-6       0.1     4000    1<=N<=50, 1<=A[i]<=1000000
-7       0.1     1000    1<=N<=100, 1<=A[i]<=1000000
-8       0.1     250     1<=N<=200, 1<=A[i]<=1000000
-9       0.1     40      1<=N<=500, 1<=A[i]<=1000000
-10      0.2     10      1<=N<=1000, 1<=A[i]<=1000000
+1       0.1     1       N=14, 1<=A[i]<=14
+2       0.1     3       1<=N<=10, 1<=A[i]<=10
+3       0.2     4000    1<=N<=20, 1<=A[i]<=1000
+4       0.3     200     1<=N<=100, 1<=A[i]<=100000
+5       0.3     10      1<=N<=1000, 1<=A[i]<=1000000
 ------------------------
-10      1       Total
+5      1       Total
 
-Time limit: 1s (cpp) or 2s (java) or 2s (py) per batch.
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
 
 Hints:
 - Use fast input/output methods.
