@@ -1,3 +1,3 @@
 import sys
-## code here
-exit(0)
+## code
+sys.exit(0)

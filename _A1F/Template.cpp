@@ -1,6 +1,6 @@
 #include<bits/extc++.h>
 using namespace std;
 int main() {
-    // code here
+    // code
     exit(0);
 }

@@ -2,7 +2,7 @@ import java.io.*;
 
 public class Solution {
     public static void main(String[] args) throws Exception {
-        // code here
+        // code
         System.exit(0);
     }
 }

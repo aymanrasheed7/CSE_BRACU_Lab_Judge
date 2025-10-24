@@ -7,15 +7,15 @@ DWORD TLE = 9, errorCode = 0;
 double best = 0, score = 0;
 mt19937_64 RNG;
 chrono::system_clock::time_point start, finish;
-string TID, UID, LNG, CMD, CMT, word, content;
+string TID, UID, LNG, CMD, CMT, inp, out, word, content;
 inline void runSolution() {
     PROCESS_INFORMATION processInfo;
     STARTUPINFOA startupInfo = { sizeof(STARTUPINFOA) };
     SECURITY_ATTRIBUTES securityAttr = {
         sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
-    HANDLE hInput = CreateFileA("in.txt", GENERIC_READ, FILE_SHARE_READ,
+    HANDLE hInput = CreateFileA(inp.c_str(), GENERIC_READ, FILE_SHARE_READ,
         &securityAttr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    HANDLE hOutput = CreateFileA("out.txt", GENERIC_WRITE, FILE_SHARE_WRITE,
+    HANDLE hOutput = CreateFileA(out.c_str(), GENERIC_WRITE, FILE_SHARE_WRITE,
         &securityAttr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (hInput == INVALID_HANDLE_VALUE || hOutput == INVALID_HANDLE_VALUE)
         return (void)(cout << "Failed to handle stdio\n", errorCode = -1);
@@ -40,11 +40,7 @@ inline void runSolution() {
     CloseHandle(processInfo.hProcess); CloseHandle(hJob);
 }
 inline void endBatch(string verdict) {
-    if ((errorCode = verdict != "Accepted") &&
-        ifstream(verdict + ".txt").peek() == ifstream::traits_type::eof()) {
-        getline(ifstream("in.txt"), content, '\0');
-        (ofstream(verdict + ".txt") << content).close();
-    }
+    if (verdict != "Accepted") errorCode = -1;
     cout << fixed << setprecision(9) << "Batch " << batch << " ended in " <<
         (chrono::duration_cast<chrono::nanoseconds>(finish - start).count()
             * 1e-9) << "s and the result is: " + verdict + "\n";
@@ -92,7 +88,7 @@ inline void prepareInput() {
                 InputA[test][i] = getRandInt(-maxAi[batch], maxAi[batch]);
         }
     }
-    ofstream fout("in.txt");
+    ofstream fout(inp);
     for (fout << nTest[batch] << "\n", test = 0; test < nTest[batch]; ++test) {
         fout << InputN[test] << "\n";
         for (lll i = 0; i < InputN[test]; ++i)
@@ -115,7 +111,7 @@ inline void assertThrow(bool condition) {
 inline void validateOutput() {
     try {
         OutputH.clear();
-        for (ifstream fin("out.txt"); fin >> word; OutputH.push_back(word));
+        for (ifstream fin(out); fin >> word; OutputH.push_back(word));
         assertThrow(getHash(OutputH) == outputHash[batch]);
         // cout << getHash(OutputH) << endl;
         // system("pause");
@@ -140,12 +136,13 @@ int main(int argc, char** argv) {
         (LNG == "java" && system("javac Solution.java")) ||
         (LNG == "py" && system("pypy -m py_compile Solution.py")))
         cout << "CompilationError\n", printScoreAndExit();
-    for (string& s : vector<string>({ "RunTimeError",
-        "TimeLimitExceeded", "WrongAnswer" })) ofstream(s + ".txt").close();
     ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
     for (batch = score = 1; batch <= nBatch; score -= weight[batch++]);
-    for (assert(!score), batch = 1; batch <= nBatch; errorCode = 0, ++batch) {
+    assert(abs(score) < 1e-9), score = 0;
+    for (batch = 1; batch <= nBatch; errorCode = 0, ++batch) {
         RNG.seed(batch), cout << "Running on Batch " << batch << endl;
+        inp = "inp" + to_string(batch) + ".txt";
+        out = "out" + to_string(batch) + ".txt";
         prepareInput(), start = chrono::system_clock::now();
         runSolution(), finish = chrono::system_clock::now();
         if (errorCode == TLE) endBatch("TimeLimitExceeded");
