@@ -57,7 +57,7 @@ inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
     cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
-lll cpp = 1000, java = 2000, py = 2000, nBatch = 5;
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.2, 0.2, 0.2, 0.2, 0.2 };
 lll nTest[] = { 0, 5, 10, 100, 1000, 10000 };
 lll maxN[] = { 0, 100, 1000, 10000, 100000, 1000000 };
@@ -90,10 +90,10 @@ inline void validateOutput() {
     try {
         OutputS.clear();
         for (ifstream fin(out); fin >> word; OutputS.push_back(word))
-            stoll(word);
+            assertThrow(1 == sscanf(word.c_str(), "%lld%*c", &test));
         assertThrow(OutputS.size() == nTest[batch]);
-        for (test = 0; test < nTest[batch]; ++test)
-            assertThrow((InputN[test] * (InputN[test] + 1LL) >> 1) == stoll(OutputS[test]));
+        for (test = 0; test < nTest[batch]; ++test) assertThrow((InputN[test]
+            * (InputN[test] + 1LL) >> 1) == stoll(OutputS[test]));
     }
     catch (...) {
         endBatch("WrongAnswer");

@@ -34,7 +34,7 @@ Batch   Score   Tests   Constraints
 ------------------------
 5       1       Total
 
-Time limit: 1s (cpp) or 2s (java) or 2s (py) per batch.
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
 
 Hints:
 - Use fast input/output methods.
