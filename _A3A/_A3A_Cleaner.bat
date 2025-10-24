@@ -4,6 +4,8 @@ set TID=_A3A
 del /f /q .\_A3A_0*
 del /f /q .\_A3A_1*
 del /f /q .\_A3A_2*
+del /f /q .\inp*
+del /f /q .\out*
 del /f /q .\*.exe
 del /f /q .\*.class
 rd /s /q __pycache__

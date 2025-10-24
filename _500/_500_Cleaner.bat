@@ -4,6 +4,8 @@ set TID=_500
 del /f /q .\_500_0*
 del /f /q .\_500_1*
 del /f /q .\_500_2*
+del /f /q .\inp*
+del /f /q .\out*
 del /f /q .\*.exe
 del /f /q .\*.class
 rd /s /q __pycache__

@@ -4,6 +4,8 @@ set TID=_A1G
 del /f /q .\_A1G_0*
 del /f /q .\_A1G_1*
 del /f /q .\_A1G_2*
+del /f /q .\inp*
+del /f /q .\out*
 del /f /q .\*.exe
 del /f /q .\*.class
 rd /s /q __pycache__
