@@ -57,15 +57,13 @@ inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
     cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
-lll cpp = 2000, java = 3000, py = 6000, nBatch = 10;
-double weight[] = { 0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-lll nTest[] = { 0, 2, 2, 20, 20, 2, 20000, 2000, 200, 20, 2 };
-lll maxNML[] = { 0, 100, 100, 100, 500, 5000, 50, 500, 5000, 50000, 500000 };
-lll maxAiBiCi[] = { 0, 100, 100, 100, 1000, 10000,
-    100000, 1000000, 10000000, 100000000, 1000000000 };
-lll outputHash[] = { 0, 37476, 38759, 12873, 59476, 1269,
-    60082, 54879, 30523, 59127, 17816 };
-vector<string> OutputA;
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
+double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
+lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
+lll maxNML[] = { 0, 20, 20, 20, 2000, 200000 };
+lll maxAiBiCi[] = { 0, 20, 20, 1000, 1000000, 1000000000 };
+lll hsh[] = { 0, 3248789, 3250072, 775821212, 90741790, 229053896 };
+vector<string> OutputH;
 vector<lll> InputN, InputM, InputL, InputK;
 vector<vector<lll>> InputA, InputB, InputC;
 inline lll getRandInt(lll low, lll high) {
@@ -105,7 +103,7 @@ inline void prepareInput() {
             if (getRandInt(0, 1) & 1) swap(N, M);
             if (getRandInt(0, 1) & 1) swap(M, L);
             if (getRandInt(0, 1) & 1) swap(L, N);
-            lll K = InputK[test] = getRandInt(1, N + M + L);
+            lll& K = InputK[test] = getRandInt(1, N + M + L);
             InputA[test].resize(N);
             InputB[test].resize(M);
             InputC[test].resize(L);
@@ -147,11 +145,10 @@ inline void assertThrow(bool condition) {
 }
 inline void validateOutput() {
     try {
-        OutputA.clear();
-        for (ifstream fin(out); fin >> word; OutputA.push_back(word));
-        assertThrow(getHash(OutputA) == outputHash[batch]);
-        // cout << getHash(OutputA) << endl;
-        // system("pause");
+        OutputH.clear();
+        for (ifstream fin(out); fin >> word; OutputH.push_back(word));
+        assertThrow(getHash(OutputH) == hsh[batch]);
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");
