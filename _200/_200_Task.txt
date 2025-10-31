@@ -40,20 +40,15 @@ Output (stdout):
 
 Scoring:
 Batch   Score   Tests   Constraints
-1       0.1     2       1<=max(N,M)<=10, 1<=K<=N+M, 1<=max(A[i],B[i])<=100
-2       0.1     2       1<=max(N,M)<=10, 1<=K<=N+M, 1<=max(A[i],B[i])<=100
-3       0.1     20      1<=max(N,M)<=10, 1<=K<=N+M, 1<=max(A[i],B[i])<=100
-4       0.1     20      1<=max(N,M)<=100, 1<=K<=N+M, 1<=max(A[i],B[i])<=1000000000
-5       0.1     20      1<=max(N,M)<=1000, 1<=K<=N+M, 1<=max(A[i],B[i])<=1000000000
-6       0.1     20000   1<=max(N,M)<=50, 1<=K<=N+M, 1<=max(A[i],B[i])<=1000000000
-7       0.1     2000    1<=max(N,M)<=500, 1<=K<=N+M, 1<=max(A[i],B[i])<=1000000000
-8       0.1     200     1<=max(N,M)<=5000, 1<=K<=N+M, 1<=max(A[i],B[i])<=1000000000
-9       0.1     20      1<=max(N,M)<=50000, 1<=K<=N+M, 1<=max(A[i],B[i])<=1000000000
-10      0.1     2       1<=max(N,M)<=500000, 1<=K<=N+M, 1<=max(A[i],B[i])<=1000000000
+1       0.1     2       1<=N, 1<=M, 1<=K<=N+M<=20, 1<=max(A[i],B[i])<=20
+2       0.1     2       1<=N, 1<=M, 1<=K<=N+M<=20, 1<=max(A[i],B[i])<=20
+3       0.2     5000    1<=N, 1<=M, 1<=K<=N+M<=20, 1<=max(A[i],B[i])<=1000
+4       0.3     50      1<=N, 1<=M, 1<=K<=N+M<=2000, 1<=max(A[i],B[i])<=1000000
+5       0.3     5       1<=N, 1<=M, 1<=K<=N+M<=200000, 1<=max(A[i],B[i])<=1000000000
 ------------------------
-10      1       Total
+5       1       Total
 
-Time limit: 2s (cpp) or 3s (java) or 6s (py) per batch.
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
 
 Hints:
 - Use fast input/output methods.
