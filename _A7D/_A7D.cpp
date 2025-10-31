@@ -134,7 +134,7 @@ inline void prepareInput() {
     }
     fout.close();
 }
-lll base = 257, mod = 65537;
+lll base = 257, mod = 2147483647;
 inline lll getHash(string str, lll ret = 0) {
     for (auto& c : str) ret = (ret * base + lll(c)) % mod;
     return ret;
