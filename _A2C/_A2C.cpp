@@ -57,17 +57,14 @@ inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
     cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
-lll cpp = 2000, java = 3000, py = 6000, nBatch = 10, tn9 = 1000000000;
-double weight[] = { 0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-lll nTest[] = { 0, 2, 2, 20, 2, 200, 20, 2000, 2, 200, 20000 };
-lll maxN[] = { 0, 10, 10, 50, 500, 50, 500, 50, 5000, 500, 50 };
-lll maxS[] = { 0, 10, 100, 1000, 10000, 100000,
-    1000000, 10000000, 100000000, tn9, tn9 };
-lll maxAi[] = { 0, 10, 100, 1000, 10000, 100000,
-    1000000, 10000000, 100000000, tn9, tn9 };
-lll outputHash[] = { 0, 7469, 7469, 6067, 7469, 57751,
-    20949, 21208, 61770, 57375, 47854 };
-vector<string> OutputC, OutputD;
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
+double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
+lll nTest[] = { 0, 2, 2, 5000, 100, 10 };
+lll maxN[] = { 0, 10, 10, 20, 500, 5000 };
+lll maxS[] = { 0, 10, 100, 1000, 1000000, 1000000000 };
+lll maxAi[] = { 0, 10, 100, 1000, 1000000, 1000000000 };
+lll hsh[] = { 0, 23950, 23950, 1516745684, 864337511, 217590308 };
+vector<string> OutputH;
 vector<lll> InputN, InputS;
 vector<vector<lll>> InputA;
 inline lll getRandInt(lll low, lll high) {
@@ -123,20 +120,26 @@ inline lll getHash(vector<string> vec, lll ret = 0) {
 inline void assertThrow(bool condition) {
     if (!condition) throw exception();
 }
+inline void assertInt(string& word, lll& num) {
+    assertThrow(1 == sscanf(word.c_str(), "%lld%*c", &num));
+}
 inline void validateOutput() {
     try {
-        OutputC.clear(), OutputD.clear();
-        for (ifstream fin(out); fin >> word; OutputC.push_back(word))
-            if (word == "-1") OutputD.push_back("-1");
-            else OutputD.push_back("0");
-        assertThrow(getHash(OutputD) == outputHash[batch]);
-        // cout << getHash(OutputD) << endl;
-        // system("pause");
-        for (lll k = test = 0; test < nTest[batch]; ++k, ++test)
-            if (OutputC[k] != "-1") assertThrow(InputS[test]
-                == InputA[test][stoi(OutputC[k]) - 1] +
-                InputA[test][stoi(OutputC[k + 1]) - 1] +
-                InputA[test][stoi(OutputC[k + 2]) - 1]), k += 2;
+        OutputH.clear();
+        lll i, j, k = test = 0;
+        for (ifstream fin(out); fin >> word; ++test) {
+            assertInt(word, i), assertThrow(test < nTest[batch]);
+            if (word == "-1") OutputH.push_back(word);
+            else OutputH.push_back("0"), assertThrow(bool(fin >> word)),
+                assertInt(word, j), assertThrow(bool(fin >> word)),
+                assertInt(word, k), assertThrow(i != j && i != k && j != k
+                    && 0 < i && 0 < j && 0 < k && i <= InputN[test] &&
+                    j <= InputN[test] && k <= InputN[test] && InputS[test]
+                    == InputA[test][i - 1] + InputA[test][j - 1] +
+                    InputA[test][k - 1]);
+        }
+        assertThrow(getHash(OutputH) == hsh[batch]);
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");

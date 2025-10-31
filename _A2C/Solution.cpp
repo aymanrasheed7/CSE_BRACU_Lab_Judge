@@ -2,7 +2,7 @@
 using namespace std;
 using lll = long long;
 lll t, n, s, i, j, k;
-pair<lll, lll> a[1000008];
+pair<lll, lll> a[5008];
 int main() {
     for (scanf("%lld", &t); t--; i = 0) {
         for (scanf("%lld%lld", &n, &s); i != n;
