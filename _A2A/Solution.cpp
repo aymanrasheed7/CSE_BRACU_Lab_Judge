@@ -1,7 +1,7 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, s, i, j, a[1000008];
+lll t, n, s, i, j, a[200008];
 int main() {
     for (scanf("%lld", &t); t--; i = j = 0) {
         for (scanf("%lld%lld", &n, &s); i != n; scanf("%lld", a + i++));
