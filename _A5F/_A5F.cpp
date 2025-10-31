@@ -130,8 +130,7 @@ inline void validateOutput() {
         OutputH.clear();
         for (ifstream fin(out); fin >> word; OutputH.push_back(word));
         assertThrow(getHash(OutputH) == outputHash[batch]);
-        // cout << getHash(OutputH) << endl;
-        // system("pause");
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");

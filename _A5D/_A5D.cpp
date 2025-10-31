@@ -152,8 +152,7 @@ inline void validateOutput() {
                 OutputP[test].clear(), l = n + 1, OutputH.push_back(word);
         }
         assertThrow(getHash(OutputH) == outputHash[batch]);
-        // cout << getHash(OutputH) << endl;
-        // system("pause");
+        // cout << ", " << getHash(OutputH) << endl;
         for (test = 0; test < nTest[batch]; ++test)
             if (!OutputP[test].empty()) {
                 assertThrow(OutputP[test][0] == InputS[test]),

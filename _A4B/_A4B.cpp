@@ -163,8 +163,7 @@ inline void validateOutput() {
             else assertThrow(0);
         assertThrow(InputAM == OutputAM);
         assertThrow(getHash(OutputH) == outputHash[batch]);
-        // cout << getHash(OutputH) << endl;
-        // system("pause");
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");

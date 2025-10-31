@@ -136,8 +136,7 @@ inline void validateOutput() {
             fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &v, &c)),
             assertThrow(w == dfs(u, v)), ++test;
         assertThrow(getHash(OutputH) == outputHash[batch]);
-        // cout << getHash(OutputH) << endl;
-        // system("pause");
+        // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
         endBatch("WrongAnswer");
