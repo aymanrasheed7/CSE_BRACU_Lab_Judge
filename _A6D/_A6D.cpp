@@ -149,6 +149,7 @@ int main(int argc, char** argv) {
     if (LNG != "py") CMT = "// ";
     else CMT = "## ", TLM = py, CMD = "pypy Solution.py";
     if (!ifstream(TID + "_" + UID + "." + LNG)) updateSubmission();
+    ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
     getline(ifstream("Solution." + LNG), content, '\0');
     for (char& c : content) c = tolower(c);
     for (ifstream fin(TID + "_Forbidden.txt"); fin >> word;)
@@ -158,7 +159,6 @@ int main(int argc, char** argv) {
         (LNG == "java" && system("javac Solution.java")) ||
         (LNG == "py" && system("pypy -m py_compile Solution.py")))
         cout << "CompilationError\n", printScoreAndExit();
-    ifstream(TID + "_" + UID + "." + LNG).ignore(3) >> best;
     for (batch = score = 1; batch <= nBatch; score -= weight[batch++]);
     assert(abs(score) < 1e-9), score = 0;
     for (batch = 1; batch <= nBatch; errorCode = 0, ++batch) {
