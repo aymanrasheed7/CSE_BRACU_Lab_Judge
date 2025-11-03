@@ -7,7 +7,7 @@ lll rec(lll x, lll y) {
     lll z = x + y >> 1, c = rec(x, z) + rec(z, y), p, q, r;
     for (p = q = z; q < y; c += z - p, ++q) {
         while (x < p && a[q] * a[q] < a[p - 1]) --p;
-        while (p < z && a[p] <= a[q] * a[q]) ++p;
+        while (p < z && a[q] * a[q] >= a[p]) ++p;
     }
     for (r = p = x, q = z; p < z && q < y;)
         if (a[p] < a[q]) b[r++] = a[p++];
