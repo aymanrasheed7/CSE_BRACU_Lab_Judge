@@ -57,21 +57,16 @@ inline void printScoreAndExit() {
     if (best <= score) updateSubmission();
     cout << "\nTentative score = " << score << "/1\n\n", exit(0);
 }
-lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
-long long tn4 = 10000, tn8 = tn4 * tn4;
+lll cpp = 1000, java = 1500, py = 3000, nBatch = 5, tn4 = 10000;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 1000, 10000, 100000 };
-lll maxA[] = { 0, 1000, 10000, 10000, 10000, 10000 };
-long long maxB[] = { 0, 10, tn4 * tn8, tn4, tn8, tn4 * tn8 };
-lll oHash[] = { 0, 56999, 10555, 36364, 39173, 30793 };
+lll maxA[] = { 0, 100, 10000, 10000, 10000, 10000 };
+lll maxB[] = { 0, 10, tn4 * tn4 * tn4, tn4, tn4 * tn4, tn4 * tn4 * tn4 };
+lll oHash[] = { 0, 3727071, 3262156, 1528837360, 771217349, 154340258 };
 vector<string> OutputH;
-vector<lll> InputA;
-vector<long long> InputB;
+vector<lll> InputA, InputB;
 inline lll getRandInt(lll low, lll high) {
     return uniform_int_distribution<lll>(low, high)(RNG);
-}
-inline long long getRandLong(long long low, long long high) {
-    return uniform_int_distribution<long long>(low, high)(RNG);
 }
 inline void prepareInput() {
     if (batch == 1) {
@@ -79,15 +74,15 @@ inline void prepareInput() {
         InputB = { 3, 5 };
     }
     else if (batch == 2) {
-        InputA = { 105, 10000 };
-        InputB = { 1, tn4 * tn8 };
+        InputA = { 119, 10000 };
+        InputB = { 1, tn4 * tn4 * tn4 };
     }
     else {
         InputA.resize(nTest[batch]);
         InputB.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
             InputA[test] = getRandInt(1, maxA[batch]);
-            InputB[test] = getRandLong(1, maxB[batch]);
+            InputB[test] = getRandInt(1, maxB[batch]);
         }
     }
     ofstream fout(inp);
