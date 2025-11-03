@@ -62,7 +62,7 @@ double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 20000, 20, 2 };
 lll maxN[] = { 0, 10, 10, 20, 20000, 200000 };
 lll maxQ[] = { 0, 10, 10, 20, 20000, 200000 };
-lll outputHash[] = { 0, 7432, 5929, 26254, 24466, 23301 };
+lll oHash[] = { 0, 7432, 5929, 26254, 24466, 23301 };
 vector<string> OutputH;
 vector<lll> InputN, InputR, InputQ;
 vector<vector<lll>> InputU, InputV, InputX;
@@ -134,7 +134,7 @@ inline void validateOutput() {
     try {
         OutputH.clear();
         for (ifstream fin(out); fin >> word; OutputH.push_back(word));
-        assertThrow(getHash(OutputH) == outputHash[batch]);
+        assertThrow(getHash(OutputH) == oHash[batch]);
         // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {

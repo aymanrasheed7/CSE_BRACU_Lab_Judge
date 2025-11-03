@@ -61,7 +61,7 @@ lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 26000, 6, 3 };
 lll maxN[] = { 0, 5, 10, 10, 1000, 2000 };
-lll outputHash[] = { 0, 24721, 13412, 48484, 59927, 24331 };
+lll oHash[] = { 0, 24721, 13412, 48484, 59927, 24331 };
 vector<string> OutputH;
 vector<lll> InputN, InputX1, InputY1, InputX2, InputY2;
 inline lll getRandInt(lll low, lll high) {
@@ -131,7 +131,7 @@ inline void validateOutput() {
     try {
         OutputH.clear();
         for (ifstream fin(out); fin >> word; OutputH.push_back(word));
-        assertThrow(getHash(OutputH) == outputHash[batch]);
+        assertThrow(getHash(OutputH) == oHash[batch]);
         // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {

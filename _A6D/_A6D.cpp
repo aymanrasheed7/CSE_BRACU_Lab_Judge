@@ -61,7 +61,7 @@ lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 20000, 20, 2 };
 lll maxN[] = { 0, 5, 10, 20, 20000, 200000 };
-lll outputHash[] = { 0, 13415, 14189, 25636, 45419, 53921 };
+lll oHash[] = { 0, 13415, 14189, 25636, 45419, 53921 };
 vector<string> OutputH;
 vector<lll> InputN;
 vector<vector<lll>> InputU, InputV;
@@ -135,7 +135,7 @@ inline void validateOutput() {
             fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &u, &c)),
             fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &v, &c)),
             assertThrow(w == dfs(u, v)), ++test;
-        assertThrow(getHash(OutputH) == outputHash[batch]);
+        assertThrow(getHash(OutputH) == oHash[batch]);
         // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {

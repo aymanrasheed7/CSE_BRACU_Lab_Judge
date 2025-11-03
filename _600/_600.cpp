@@ -63,7 +63,7 @@ lll nTest[] = { 0, 2, 2, 2000, 20, 2 };
 lll maxN[] = { 0, 10, 10, 20, 10000, 100000 };
 lll maxM[] = { 0, 10, 10, 30, 15000, 150000 };
 lll maxW[] = { 0, 10, 10, 100, 10000, 1000000 };
-lll outputHash[] = { 0, 51351, 41056, 20022, 50936, 41247 };
+lll oHash[] = { 0, 51351, 41056, 20022, 50936, 41247 };
 vector<string> OutputH;
 vector<set<pair<lll, lll>>> InputE;
 vector<lll> InputN, InputM, InputS, InputD;
@@ -150,7 +150,7 @@ inline void validateOutput() {
     try {
         OutputH.clear();
         for (ifstream fin(out); fin >> word; OutputH.push_back(word));
-        assertThrow(getHash(OutputH) == outputHash[batch]);
+        assertThrow(getHash(OutputH) == oHash[batch]);
         // cout << ", " << getHash(OutputH) << endl;
     }
     catch (...) {
