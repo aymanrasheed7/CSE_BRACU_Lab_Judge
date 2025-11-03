@@ -59,11 +59,10 @@ inline void printScoreAndExit() {
 }
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
-lll nTest[] = { 0, 2, 2, 6000, 20, 2 };
-lll maxN[] = { 0, 10, 20, 30, 10000, 100000 };
+lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
+lll maxN[] = { 0, 10, 20, 20, 10000, 100000 };
 lll maxAi[] = { 0, 10, 100, 1000, 1000000, 1000000000 };
-vector<string> OutputH;
-vector<lll> InputN;
+vector<lll> InputN, OutputB;
 vector<vector<lll>> InputA;
 inline lll getRandInt(lll low, lll high) {
     return uniform_int_distribution<lll>(low, high)(RNG);
@@ -103,16 +102,19 @@ inline void assertThrow(bool condition) {
 inline void validateOutput() {
     try {
         lll i, k = 0;
-        OutputH.clear();
+        OutputB.resize(accumulate(InputN.begin(), InputN.end(), 0));
         for (ifstream fin(out); fin >> word;)
-            stoi(word), OutputH.push_back(word);
-        assertThrow(OutputH.size() ==
-            accumulate(InputN.begin(), InputN.end(), 0));
-        for (test = 0; test < nTest[batch]; ++test) {
-            lll N = InputN[test], M = 1 << (32 - __builtin_clz(N));
-            for (vector<lll> A(M, 0); N--; A[i] = stoi(OutputH[k++]))
-                for (i = 1; assertThrow(i < M), A[i];
-                    i = i << 1 | (A[i] < stoi(OutputH[k])));
+            assertThrow(k < OutputB.size()),
+            assertThrow(1 == sscanf(word.c_str(), "%lld%*c", &OutputB[k++]));
+        assertThrow(k == OutputB.size());
+        for (test = k = 0; test < nTest[batch]; ++test) {
+            lll N = InputN[test], M = 1 << (64 - __builtin_clzll(N));
+            for (vector<lll> A(M, 0); N--; A[i] = OutputB[k++])
+                for (i = 1; assertThrow(i < M), A[i];)
+                    i = i << 1 | (A[i] < OutputB[k]);
+            sort(OutputB.begin() + k - InputN[test], OutputB.begin() + k);
+            assertThrow(equal(InputA[test].begin(), InputA[test].end(),
+                OutputB.begin() + k - InputN[test]));
         }
     }
     catch (...) {
