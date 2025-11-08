@@ -5,9 +5,9 @@ lll t, n, l, h, i, a[100008], b[100008];
 lll rec(lll x, lll y) {
     if (x + 1 == y) return 0;
     lll z = x + y >> 1, c = rec(x, z) + rec(z, y), p, q, r;
-    for (p = q = x, r = z; r < y; c += q - p, ++r) {
-        while (p < z && a[r] - a[p] < l) ++p;
-        while (q < z && a[r] - a[q] <= h) ++q;
+    for (p = q = z, r = x; r < z; c += q - p, ++r) {
+        while (p < y && a[p] - a[r] < l) ++p;
+        while (q < y && a[q] - a[r] <= h) ++q;
     }
     for (r = p = x, q = z; p < z && q < y;)
         if (a[p] < a[q]) b[r++] = a[p++];

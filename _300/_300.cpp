@@ -62,7 +62,7 @@ double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
 lll maxN[] = { 0, 10, 10, 20, 10000, 100000 };
 lll maxLHAi[] = { 0, 10, 100, 1000, 100000, 1000000 };
-lll oHash[] = { 0, 12645, 3249556, 1375556943, 329098289, 495977157 };
+lll oHash[] = { 0, 12648, 14697, 1688139767, 5220774, 992544152 };
 vector<string> OutputH;
 vector<lll> InputN, InputL, InputH;
 vector<vector<lll>> InputA;

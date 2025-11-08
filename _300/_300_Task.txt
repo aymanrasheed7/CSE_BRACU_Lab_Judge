@@ -20,7 +20,7 @@ Input (stdin):
 5 4 3 -2 -1
 Output (stdout):
 1
-4
+7
 
 Example-2 (batch-2):
 Input (stdin):
@@ -30,7 +30,7 @@ Input (stdin):
 1 1 25
 -10
 Output (stdout):
-13
+9
 0
 
 Scoring:
