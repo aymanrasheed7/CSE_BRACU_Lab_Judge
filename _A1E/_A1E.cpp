@@ -128,7 +128,7 @@ inline void validateOutput() {
             if (OutputH.push_back(word), word == "YES") {
                 for (assertInputInt(fin, m); m--;) {
                     assertInputInt(fin, i), assertInputInt(fin, j);
-                    assertThrow(i + 2 == j);
+                    assertThrow(1 <= i && i + 2 == j && j <= InputN[test]);
                     swap(InputA[test][i - 1], InputA[test][j - 1]);
                 }
                 assertThrow(is_sorted(InputA[test].begin(),
