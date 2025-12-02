@@ -62,14 +62,16 @@ double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 2500, 400, 100 };
 lll maxN[] = { 0, 10, 10, 20, 50, 100 };
 lll maxW[] = { 0, 10, 10, 100, 1000, 1000 };
-lll oHash[] = { 0, 49405, 54098, 6616, 10377, 62908 };
+lll oHash[] = { 0, 113276593, 897932637, 464075656, 1708198558, 1313451403 };
 vector<string> OutputH;
 vector<lll> InputN, InputM;
 vector<vector<lll>> InputU, InputV, InputW;
+vector<map<pair<lll, lll>, lll>> InputE;
 inline lll getRandInt(lll low, lll high) {
     return uniform_int_distribution<lll>(low, high)(RNG);
 }
 inline void prepareInput() {
+    InputE.clear(), InputE.resize(nTest[batch]);
     if (batch == 1) {
         InputN = { 6, 4 };
         InputM = { 7, 5 };
@@ -91,24 +93,23 @@ inline void prepareInput() {
         InputV.resize(nTest[batch]);
         InputW.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
-            InputU[test].clear(), InputV[test].clear(), InputW[test].clear();
-            lll N = InputN[test] = getRandInt(1, maxN[batch]);
-            lll K = N * N - N, M = getRandInt(0, K);
-            for (lll i = 0; i < N; ++i)
-                for (lll j = 0; j < N; ++j)
-                    if (i != j && M < getRandInt(1, K))
-                        InputU[test].push_back(i + 1),
-                        InputV[test].push_back(j + 1),
-                        InputW[test].push_back(getRandInt(1, maxW[batch]));
-            InputM[test] = M = InputW[test].size();
-            for (lll k = 3; k--;)
-                for (lll i = 1, j; i < M; ++i)
-                    j = getRandInt(0, i - 1),
-                    swap(InputU[test][i], InputU[test][j]),
-                    swap(InputV[test][i], InputV[test][j]),
-                    swap(InputW[test][i], InputW[test][j]);
+            lll u, v, w, & N = InputN[test], & M = InputM[test];
+            N = getRandInt(2, maxN[batch]), M = getRandInt(1, N * N - N);
+            for (InputU[test].resize(M), InputV[test].resize(M),
+                InputW[test].resize(M), w = M; w--;) {
+                u = getRandInt(1, N), v = getRandInt(1, N);
+                if (u == v || InputE[test].find(make_pair(u, v))
+                    != InputE[test].end()) ++w;
+                else InputU[test][w] = u, InputV[test][w] = v,
+                    InputE[test][make_pair(u, v)] = InputW[test][w]
+                    = getRandInt(1, maxW[batch]);
+            }
         }
     }
+    if (InputE[0].size() != InputM[0])
+        for (test = 0; test < nTest[batch]; ++test)
+            for (lll w = InputM[test]; w--; InputE[test][make_pair(
+                InputU[test][w], InputV[test][w])] = InputW[test][w]);
     ofstream fout(inp);
     for (fout << nTest[batch] << "\n", test = 0; test < nTest[batch]; ++test) {
         fout << InputN[test] << " " << InputM[test] << "\n";

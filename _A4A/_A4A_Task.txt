@@ -1,6 +1,6 @@
 Task:
 Given the edges of a simple directed weighted graph with N nodes and M edges,
-prepare the adjacency matrix representation of that graph.
+show the adjacency matrix representation of that graph.
 The nodes are numbered from 1 to N.
 
 Input:
@@ -66,11 +66,11 @@ Output (stdout):
 
 Scoring:
 Batch   Score   Tests   Constraints
-1       0.1     2       1<=N<=10, 0<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=10
-2       0.1     2       1<=N<=10, 0<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=10
-3       0.2     2500    1<=N<=20, 0<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=100
-4       0.3     400     1<=N<=50, 0<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=1000
-5       0.3     100     1<=N<=100, 0<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=1000
+1       0.1     2       2<=N<=10, 1<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=10
+2       0.1     2       2<=N<=10, 1<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=10
+3       0.2     2500    2<=N<=20, 1<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=100
+4       0.3     400     2<=N<=50, 1<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=1000
+5       0.3     100     2<=N<=100, 1<=M<=N^2-N, 1<=U[i]<=N, 1<=V[i]<=N, 1<=W[i]<=1000
 ------------------------
 5       1       Total
 
