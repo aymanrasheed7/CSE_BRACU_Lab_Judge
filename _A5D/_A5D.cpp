@@ -60,9 +60,9 @@ inline void printScoreAndExit() {
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
-lll maxN[] = { 0, 10, 10, 20, 2000, 100000 };
-lll maxM[] = { 0, 10, 10, 30, 3000, 150000 };
-lll oHash[] = { 0, 24464, 2984846, 1232783538, 1827574813, 562432105 };
+lll maxN[] = { 0, 10, 10, 20, 5000, 100000 };
+lll maxM[] = { 0, 10, 10, 30, 6000, 150000 };
+lll oHash[] = { 0, 24464, 2984846, 1232783538, 515955045, 562432105 };
 vector<string> OutputH;
 vector<lll> InputN, InputM, InputS, InputD, InputK;
 vector<vector<lll>> InputU, InputV, OutputP;
