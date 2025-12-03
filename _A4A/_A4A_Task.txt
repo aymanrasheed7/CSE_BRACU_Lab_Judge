@@ -11,7 +11,7 @@ from U[i] to V[i] with weight W[i].
 
 Output:
 For each test in the given order, print N lines each containing N integers,
-representing the adjacency matrix which you are asked to prepare in this task.
+representing the adjacency matrix which you are asked to show in this task.
 
 Example-1 (batch-1):
 Input (stdin):
