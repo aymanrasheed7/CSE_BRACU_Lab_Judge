@@ -1,8 +1,8 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, m, s, d, k, u, v, i, w[200008];
-vector<lll> a[200008], b;
+lll t, n, m, s, d, k, u, v, i, w[100008];
+vector<lll> a[100008], b;
 queue<lll> q;
 lll bfs(lll p, lll o) {
     if (p == k || o == k) return n + n;
