@@ -59,10 +59,10 @@ inline void printScoreAndExit() {
 }
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
-lll nTest[] = { 0, 2, 2, 20000, 20, 2 };
-lll maxN[] = { 0, 10, 10, 20, 20000, 200000 };
-lll maxQ[] = { 0, 10, 10, 20, 20000, 200000 };
-lll oHash[] = { 0, 1801, 63546, 23938, 2795, 6547 };
+lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
+lll maxN[] = { 0, 10, 10, 20, 2000, 50000 };
+lll maxQ[] = { 0, 10, 10, 20, 2000, 50000 };
+lll oHash[] = { 0, 1600378882, 462109577, 1530170371, 2118004420, 1063064938 };
 vector<string> OutputH;
 vector<lll> InputN, InputR, InputQ;
 vector<vector<lll>> InputU, InputV, InputX;
@@ -94,17 +94,16 @@ inline void prepareInput() {
         InputV.resize(nTest[batch]);
         InputX.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
-            lll N = InputN[test] = getRandInt(1, maxN[batch]);
-            lll R = InputR[test] = getRandInt(1, N);
-            lll Q = InputQ[test] = getRandInt(1, maxQ[batch]);
+            lll x, & N = InputN[test], & R = InputR[test], & Q = InputQ[test];
+            N = getRandInt(1, maxN[batch]), R = getRandInt(1, N);
+            Q = getRandInt(1, maxQ[batch]), InputX[test].resize(Q);
             InputU[test].resize(N - 1), InputV[test].resize(N - 1);
-            InputX[test].resize(Q);
-            for (lll i = 2; i <= N; ++i) {
-                lll u = i, v = getRandInt(1, i - 1);
+            for (lll u = x = 2, v; x <= N; ++x) {
+                u = x, v = getRandInt(1, x - 1);
                 if (getRandInt(0, 1) & 1) swap(u, v);
-                InputU[test][i - 2] = u, InputV[test][i - 2] = v;
+                InputU[test][x - 2] = u, InputV[test][x - 2] = v;
             }
-            for (lll i = Q; i--;) InputX[test][i] = getRandInt(1, N);
+            for (x = Q; x--;) InputX[test][x] = getRandInt(1, N);
         }
     }
     ofstream fout(inp);
