@@ -59,19 +59,19 @@ inline void printScoreAndExit() {
 }
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
-lll nTest[] = { 0, 2, 2, 20000, 20, 2 };
-lll maxN[] = { 0, 10, 10, 20, 20000, 200000 };
-lll maxM[] = { 0, 10, 10, 20, 20000, 200000 };
-lll oHash[] = { 0, 56637, 58086, 34081, 16299, 58086 };
+lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
+lll maxN[] = { 0, 10, 10, 20, 5000, 100000 };
+lll maxM[] = { 0, 10, 10, 20, 5000, 100000 };
+lll oHash[] = { 0, 1515337614, 11068302, 341008766, 2145123064, 1569932308 };
 vector<string> OutputH;
 vector<lll> InputN, InputM;
-vector<set<pair<lll, lll>>> InputE;
 vector<vector<lll>> InputU, InputV;
+vector<set<pair<lll, lll>>> InputE;
 inline lll getRandInt(lll low, lll high) {
     return uniform_int_distribution<lll>(low, high)(RNG);
 }
 inline void prepareInput() {
-    InputE.resize(nTest[batch]);
+    InputE.clear(), InputE.resize(nTest[batch]);
     if (batch == 1) {
         InputN = { 4, 5 };
         InputM = { 7, 4 };
@@ -90,16 +90,14 @@ inline void prepareInput() {
         InputU.resize(nTest[batch]);
         InputV.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
-            InputE[test].clear();
-            lll N = InputN[test] = getRandInt(2, maxN[batch]);
-            lll M = InputM[test] = getRandInt(1, maxM[batch]);
-            InputU[test].resize(M), InputV[test].resize(M);
-            if (N * 1LL * N - N < M) M = InputM[test] = N * N - N;
-            while (M--) {
-                lll u = getRandInt(1, N), v = getRandInt(1, N);
+            lll u, v, w, & N = InputN[test], & M = InputM[test];
+            N = getRandInt(2, maxN[batch]);
+            M = getRandInt(1, min(N * N - N, maxM[batch]));
+            for (InputU[test].resize(M), InputV[test].resize(M), w = M; w--;) {
+                u = getRandInt(1, N), v = getRandInt(1, N);
                 if (u == v || InputE[test].find(make_pair(u, v))
-                    != InputE[test].end()) ++M;
-                else InputU[test][M] = u, InputV[test][M] = v,
+                    != InputE[test].end()) ++w;
+                else InputU[test][w] = u, InputV[test][w] = v,
                     InputE[test].insert(make_pair(u, v));
             }
         }

@@ -1,8 +1,8 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, m, u, v, i, f, w[200008];
-vector<lll> a[200008];
+lll t, n, m, u, v, i, f, w[100008];
+vector<lll> a[100008];
 void dfs(lll p) {
     w[p] = 1;
     for (auto& q : a[p]) if (!w[q]) dfs(q);
