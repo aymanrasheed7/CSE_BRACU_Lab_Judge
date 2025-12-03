@@ -106,7 +106,9 @@ inline void prepareInput() {
             }
         }
     }
-    if (InputE[0].size() != InputM[0])
+    lll m = 1;
+    for (auto e : InputE) m &= e.empty();
+    if (m)
         for (test = 0; test < nTest[batch]; ++test)
             for (lll w = InputM[test]; w--; InputE[test][make_pair(
                 InputU[test][w], InputV[test][w])] = InputW[test][w]);

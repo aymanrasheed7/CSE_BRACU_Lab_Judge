@@ -11,7 +11,7 @@ contains M integers W[i]. There is an edge from U[i] to V[i] with weight W[i].
 
 Output:
 For each test in the given order, print N lines representing the adjacency list
-which you are asked to prepare in this task. The i'th line has "i:" followed by
+which you are asked to show in this task. The i'th line has "i:" followed by
 some (x,y) pairs such that there is an edge from i to x with weight y.
 
 Example-1 (batch-1):
