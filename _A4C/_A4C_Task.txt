@@ -1,6 +1,6 @@
 Task:
 Given the adjacency list representation of a simple directed unweighted graph
-with N nodes, prepare the adjacency matrix representation of that graph.
+with N nodes, show the adjacency matrix representation of that graph.
 The nodes are numbered from 0 to (N-1).
 
 Input:
@@ -13,7 +13,7 @@ nodes of node numbered (i-2).
 
 Output:
 For each test in the given order, print N lines each containing N integers,
-representing the adjacency matrix which you are asked to prepare in this task.
+representing the adjacency matrix which you are asked to show in this task.
 
 Example-1 (batch-1):
 Input (stdin):

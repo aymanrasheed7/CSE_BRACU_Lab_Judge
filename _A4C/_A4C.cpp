@@ -61,14 +61,16 @@ lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
 lll nTest[] = { 0, 2, 2, 10000, 400, 100 };
 lll maxN[] = { 0, 5, 5, 10, 50, 100 };
-lll oHash[] = { 0, 45830, 65444, 1977, 55590, 47244 };
+lll oHash[] = { 0, 1355093052, 1522438907, 129547639, 1400447165, 405475006 };
 vector<string> OutputH;
 vector<lll> InputN;
 vector<vector<vector<lll>>> InputA;
+vector<set<pair<lll, lll>>> InputE;
 inline lll getRandInt(lll low, lll high) {
     return uniform_int_distribution<lll>(low, high)(RNG);
 }
 inline void prepareInput() {
+    InputE.clear(), InputE.resize(nTest[batch]);
     if (batch == 1) {
         InputN = { 1, 5 };
         InputA = { {{}}, {{1, 2}, {0}, {0}, {4}, {3}} };
@@ -79,19 +81,26 @@ inline void prepareInput() {
     }
     else {
         InputN.resize(nTest[batch]);
-        InputA.resize(nTest[batch]);
+        InputA.clear(), InputA.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
-            lll N = InputN[test] = getRandInt(1, maxN[batch]);
-            lll K = N * N - N, M = getRandInt(0, K);
-            InputA[test].resize(InputN[test]);
-            for (lll i = 0; i < N; ++i) {
-                InputA[test][i].clear();
-                for (lll j = 0; j < N; ++j)
-                    if (i != j && M < getRandInt(1, K))
-                        InputA[test][i].push_back(j);
+            lll u, v, w, m, & N = InputN[test];
+            for (N = getRandInt(1, maxN[batch]), InputA[test].resize(N),
+                w = m = getRandInt(0, N * N - N); w--;) {
+                u = getRandInt(0, N - 1), v = getRandInt(0, N - 1);
+                if (u == v || InputE[test].find(make_pair(u, v))
+                    != InputE[test].end()) ++w;
+                else InputA[test][u].push_back(v),
+                    InputE[test].insert(make_pair(u, v));
             }
         }
     }
+    lll m = 1;
+    for (auto e : InputE) m &= e.empty();
+    if (m)
+        for (test = 0; test < nTest[batch]; ++test)
+            for (lll u = InputN[test]; u--;)
+                for (lll v : InputA[test][u])
+                    InputE[test].insert(make_pair(u, v));
     ofstream fout(inp);
     for (fout << nTest[batch] << "\n", test = 0; test < nTest[batch]; ++test) {
         fout << InputN[test];
