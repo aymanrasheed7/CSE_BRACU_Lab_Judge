@@ -1,8 +1,8 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, r, q, u, v, x, i, w[200008];
-vector<lll> a[200008];
+lll t, n, r, q, u, v, x, i, w[50008];
+vector<lll> a[50008];
 void dfs(lll p) {
     w[p] = 1;
     for (auto& o : a[p]) if (!w[o]) dfs(o), w[p] = max(w[p], 1 + w[o]);
