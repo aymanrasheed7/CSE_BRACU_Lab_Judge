@@ -59,9 +59,9 @@ inline void printScoreAndExit() {
 }
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
-lll nTest[] = { 0, 2, 2, 20000, 4, 4 };
-lll maxN[] = { 0, 5, 10, 16, 1000, 2000 };
-lll oHash[] = { 0, 14184, 14698, 18141, 41839, 16571 };
+lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
+lll maxN[] = { 0, 5, 10, 16, 250, 1600 };
+lll oHash[] = { 0, 14184, 14698, 680716949, 634031717, 533549713 };
 vector<string> OutputH;
 vector<lll> InputN, InputK, InputX, InputY;
 inline lll getRandInt(lll low, lll high) {
@@ -79,16 +79,6 @@ inline void prepareInput() {
         InputK = { 1, 1 };
         InputX = { 8, 1 };
         InputY = { 4, 1 };
-    }
-    else if (batch == 3) {
-        InputN.resize(nTest[batch], 1);
-        InputK.resize(nTest[batch], 1);
-        InputX.resize(nTest[batch], 1);
-        InputY.resize(nTest[batch], 1);
-        for (lll N = 1, K, X, Y = test = 0; N <= maxN[batch]; ++N)
-            for (X = 1; X <= N; ++X) for (Y = 1; Y <= N; ++Y)
-                for (K = 0; K <= N; ++K) InputN[test] = N,
-                    InputK[test] = K, InputX[test] = X, InputY[test++] = Y;
     }
     else {
         InputN.resize(nTest[batch]);
