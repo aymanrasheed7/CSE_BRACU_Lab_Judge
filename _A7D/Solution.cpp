@@ -1,9 +1,9 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, m, s, d, u, v, i, w[200008], x[200008];
+lll t, n, m, s, d, u, v, i, w[150008], x[150008];
 priority_queue<pair<lll, lll>> q;
-vector<lll> a[200008];
+vector<lll> a[150008];
 int main() {
     for (scanf("%lld", &t); t--;
         printf("%lld\n", x[d] < 1e17 ? x[d] : -1), i = 0) {
