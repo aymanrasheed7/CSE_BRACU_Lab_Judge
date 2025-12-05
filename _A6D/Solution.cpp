@@ -1,8 +1,8 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, u, v, x, i, w[200008];
-vector<lll> a[200008];
+lll t, n, u, v, x, i, w[100008];
+vector<lll> a[100008];
 queue<lll> q;
 lll bfs(lll p) {
     for (i = 0; i++ != n; w[i] = 0);

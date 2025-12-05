@@ -59,9 +59,9 @@ inline void printScoreAndExit() {
 }
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
-lll nTest[] = { 0, 2, 2, 20000, 20, 2 };
-lll maxN[] = { 0, 5, 10, 20, 20000, 200000 };
-lll oHash[] = { 0, 13415, 14189, 25636, 45419, 53921 };
+lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
+lll maxN[] = { 0, 5, 10, 20, 5000, 100000 };
+lll oHash[] = { 0, 13415, 14189, 266855370, 927757903, 438797547 };
 vector<string> OutputH;
 vector<lll> InputN;
 vector<vector<lll>> InputU, InputV;
@@ -118,6 +118,9 @@ inline lll getHash(vector<string> vec, lll ret = 0) {
 inline void assertThrow(bool condition) {
     if (!condition) throw exception();
 }
+inline void assertInt(string& word, lll& num) {
+    assertThrow(1 == sscanf(word.c_str(), "%lld%*c", &num));
+}
 lll dfs(lll p, lll q, lll r = 0) {
     if (p == q) return 0;
     lll s = InputN[test];
@@ -126,15 +129,13 @@ lll dfs(lll p, lll q, lll r = 0) {
 }
 inline void validateOutput() {
     try {
-        char c;
-        test = 0;
+        test = -1;
         lll u, v, w;
         OutputH.clear();
-        for (ifstream fin(out); fin >> word;) OutputH.push_back(word),
-            assertThrow(1 == sscanf(word.c_str(), "%d%c", &w, &c)),
-            fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &u, &c)),
-            fin >> word, assertThrow(1 == sscanf(word.c_str(), "%d%c", &v, &c)),
-            assertThrow(w == dfs(u, v)), ++test;
+        for (ifstream fin(out); fin >> word;) ++test, OutputH.push_back(word),
+            assertInt(word, w), fin >> word, assertInt(word, u), fin >> word,
+            assertInt(word, v), assertThrow(test < nTest[batch] && 1 <=
+                min(u, v) && max(u, v) <= InputN[test] && w == dfs(u, v));
         assertThrow(getHash(OutputH) == oHash[batch]);
         // cout << ", " << getHash(OutputH) << endl;
     }
