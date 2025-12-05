@@ -1,8 +1,8 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, u, v, w, i, z[200008];
-vector<pair<lll, lll>> a[200008];
+lll t, n, u, v, w, i, z[100008];
+vector<pair<lll, lll>> a[100008];
 lll dfs(lll x, lll y) {
     if (x == 1) return 0;
     lll r = 2e9;
