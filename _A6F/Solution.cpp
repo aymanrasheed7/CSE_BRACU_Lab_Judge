@@ -1,8 +1,8 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, m, s, r, u, v, i, w[200008];
-vector<lll> a[200008];
+lll t, n, m, s, r, u, v, i, w[50008];
+vector<lll> a[50008];
 queue<lll> q;
 int main() {
     for (scanf("%lld", &t); t--; i = 0) {

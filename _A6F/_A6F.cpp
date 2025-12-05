@@ -59,19 +59,19 @@ inline void printScoreAndExit() {
 }
 lll cpp = 1000, java = 1500, py = 3000, nBatch = 5;
 double weight[] = { 0, 0.1, 0.1, 0.2, 0.3, 0.3 };
-lll nTest[] = { 0, 2, 2, 20000, 20, 2 };
-lll maxN[] = { 0, 10, 20, 20, 20000, 200000 };
-lll maxM[] = { 0, 10, 20, 30, 30000, 300000 };
-lll oHash[] = { 0, 62084, 49907, 60129, 43986, 19786 };
+lll nTest[] = { 0, 2, 2, 5000, 50, 5 };
+lll maxN[] = { 0, 10, 20, 20, 3000, 50000 };
+lll maxM[] = { 0, 10, 20, 30, 4500, 75000 };
+lll oHash[] = { 0, 805282531, 320120941, 1119040861, 1681731616, 467087380 };
 vector<string> OutputH;
 vector<lll> InputN, InputM, InputS, InputQ;
-vector<set<pair<lll, lll>>> InputE;
 vector<vector<lll>> InputU, InputV, InputT, InputR;
+vector<set<pair<lll, lll>>> InputE;
 inline lll getRandInt(lll low, lll high) {
     return uniform_int_distribution<lll>(low, high)(RNG);
 }
 inline void prepareInput() {
-    InputE.resize(nTest[batch]);
+    InputE.clear(), InputE.resize(nTest[batch]);
     if (batch == 1) {
         InputN = { 8, 1 };
         InputM = { 6, 0 };
@@ -104,37 +104,39 @@ inline void prepareInput() {
         InputT.resize(nTest[batch]);
         InputR.resize(nTest[batch]);
         for (test = 0; test < nTest[batch]; ++test) {
-            InputE[test].clear();
-            lll N = InputN[test] = getRandInt(1, maxN[batch]);
-            lll M = InputM[test] = getRandInt(0, maxM[batch]);
-            lll S = InputS[test] = getRandInt(1, N);
-            lll Q = InputQ[test] = getRandInt(1, N);
-            InputU[test].resize(M), InputV[test].resize(M);
-            InputT[test].resize(S), InputR[test].resize(Q);
-            if ((N * 1LL * N - N >> 1) < M) M = InputM[test] = N * N - N >> 1;
-            while (M--) {
-                lll u = getRandInt(1, N), v = getRandInt(1, N);
+            lll u, v, w, & N = InputN[test], & M = InputM[test];
+            N = getRandInt(2, maxN[batch]);
+            M = getRandInt(1, min(N * N - N >> 1, maxM[batch]));
+            InputS[test] = getRandInt(1, N), InputQ[test] = getRandInt(1, N);
+            for (InputU[test].resize(M), InputV[test].resize(M), w = M; w--;) {
+                u = getRandInt(1, N), v = getRandInt(1, N);
                 if (u == v || InputE[test].find(make_pair(u, v))
-                    != InputE[test].end()) ++M;
-                else InputU[test][M] = u, InputV[test][M] = v,
+                    != InputE[test].end()) ++w;
+                else InputU[test][w] = u, InputV[test][w] = v,
                     InputE[test].insert(make_pair(u, v)),
                     InputE[test].insert(make_pair(v, u));
             }
-            for (lll i = 1; i <= N; ++i) {
-                if (getRandInt(0, N - i) < S) InputT[test][--S] = i;
-                if (getRandInt(0, N - i) < Q) InputR[test][--Q] = i;
+            for (InputT[test].resize(u = InputS[test]),
+                InputR[test].resize(v = InputQ[test]), w = 1; w <= N; ++w) {
+                if (getRandInt(0, N - w) < u) InputT[test][--u] = w;
+                if (getRandInt(0, N - w) < v) InputR[test][--v] = w;
             }
             shuffle(InputT[test].begin(), InputT[test].end(), RNG);
             shuffle(InputR[test].begin(), InputR[test].end(), RNG);
         }
     }
+    lll m = 1;
+    for (auto e : InputE) m &= e.empty();
+    if (m)
+        for (test = 0; test < nTest[batch]; ++test)
+            for (lll w = InputM[test]; w--; InputE[test].insert(make_pair(
+                InputU[test][w], InputV[test][w])), InputE[test].insert(
+                    make_pair(InputV[test][w], InputU[test][w])));
     ofstream fout(inp);
     for (fout << nTest[batch] << "\n", test = 0; test < nTest[batch]; ++test) {
         fout << InputN[test] << " " << InputM[test] << " " <<
             InputS[test] << " " << InputQ[test] << "\n";
         for (lll i = 0; i < InputM[test]; ++i)
-            InputE[test].insert(make_pair(InputU[test][i], InputV[test][i])),
-            InputE[test].insert(make_pair(InputV[test][i], InputU[test][i])),
             fout << InputU[test][i] << " " << InputV[test][i] << "\n";
         for (lll i = 0; i < InputS[test]; ++i)
             fout << InputT[test][i] << (i + 1 == InputS[test] ? "\n" : " ");
