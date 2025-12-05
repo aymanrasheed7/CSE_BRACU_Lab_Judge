@@ -1,7 +1,7 @@
 #include<bits/extc++.h>
 using namespace std;
 using lll = long long;
-lll t, n, p1, q1, p2, q2, i, j, k, a[2008][2008];
+lll t, n, p1, q1, p2, q2, i, j, k, a[1608][1608];
 lll dx[] = { 2, 2, 1, 1, -1, -1, -2, -2 };
 lll dy[] = { 1, -1, -2, 2, 2, -2, -1, 1 };
 queue<lll> r;
