@@ -1,5 +1,5 @@
 @echo off
-set TID=_A6F
+set TID=_A6E
 @REM for %%a in ("%CD%") do set TID=%%~nxa
 set SID=00000000
 cmd /c .\%TID%_Cleaner.bat
