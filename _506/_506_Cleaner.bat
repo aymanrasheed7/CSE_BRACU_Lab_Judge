@@ -1,9 +1,9 @@
 @echo off
-set TID=_600
+set TID=_506
 @REM for %%a in ("%CD%") do set TID=%%~nxa
-del /f /q .\_600_0*
-del /f /q .\_600_1*
-del /f /q .\_600_2*
+del /f /q .\_506_0*
+del /f /q .\_506_1*
+del /f /q .\_506_2*
 del /f /q .\inp*
 del /f /q .\out*
 del /f /q .\*.exe

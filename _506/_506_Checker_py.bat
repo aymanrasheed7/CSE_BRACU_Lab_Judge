@@ -1,5 +1,5 @@
 @echo off
-set TID=_600
+set TID=_506
 @REM for %%a in ("%CD%") do set TID=%%~nxa
 set SID=00000000
 set LNG=py
