@@ -1,8 +1,8 @@
 @echo off
-set TID=_604
+set TID=_510
 @REM for %%a in ("%CD%") do set TID=%%~nxa
 set SID=00000000
-set LNG=cpp
+set LNG=py
 c++ %TID%.cpp
 .\a.exe %TID% %SID% %LNG%
 del /f /q .\*.exe >nul 2>&1
