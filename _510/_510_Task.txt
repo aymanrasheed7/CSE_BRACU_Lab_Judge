@@ -1,6 +1,6 @@
 Task:
 Given a simple undirected weighted graph with N nodes and M edges, find (if
-there is any) the length of the second shortest path from node 1 to node N.
+there is any) the length of the second shortest path from node S to node D.
 Note that the length of the second shortest path can be the same as the length
 of the shortest path. The nodes are numbered from 1 to N.
 
