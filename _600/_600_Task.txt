@@ -1,0 +1,71 @@
+Task:
+Given a simple connected undirected weighted graph with N nodes and M edges,
+find the weight of the Maximum Spanning Tree of that graph.
+Tree is a connected undirected graph with no cycles. Spanning tree of a
+connected undirected graph is a tree made using a subset of edges of that
+graph. Weight of a Tree is the sum of weights of all the edges in that tree.
+Maximum Spanning Tree is a spanning tree with maximum weight.
+The nodes are numbered from 1 to N.
+
+Input:
+First line contains the number of tests. The description of each test follows.
+Each test is described by (M+1) lines. First line contains N, M. Each of the
+remaining M lines contains U[i], V[i], W[i] indicating that there is an
+edge between U[i] and V[i] with weight W[i].
+
+Output:
+For each test in the given order, print one integer in one line, the weight you
+are asked to find in this task.
+
+Example-1 (batch-1):
+Input (stdin):
+2
+4 3
+3 4 5
+3 1 5
+2 1 2
+6 5
+2 6 3
+2 3 3
+2 1 4
+6 5 1
+5 4 2
+
+Output (stdout):
+12
+13
+
+Example-2 (batch-2):
+Input (stdin):
+2
+2 1
+1 2 9
+5 7
+1 2 8
+1 4 3
+1 5 4
+2 4 8
+2 3 5
+4 3 4
+3 5 5
+
+Output (stdout):
+9
+26
+
+Scoring:
+Batch   Score   Tests   Constraints
+1       0.1     2       2<=N<=10, 1<=M<=10, 1<=W[i]<=10
+2       0.1     2       2<=N<=10, 1<=M<=10, 1<=W[i]<=10
+3       0.2     5000    2<=N<=20, 1<=M<=30, 1<=W[i]<=100
+4       0.3     50      2<=N<=2000, 1<=M<=3000, 1<=W[i]<=10000
+5       0.3     5       2<=N<=40000, 1<=M<=60000, 1<=W[i]<=1000000
+------------------------
+5       1       Total
+
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
+
+Hints:
+- Use fast input/output methods.
+- 0.2 score for passing only sample batches.
+- O((M+N)log(M+N)) solution is expected.
