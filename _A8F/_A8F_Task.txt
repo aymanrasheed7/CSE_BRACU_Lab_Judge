@@ -1,0 +1,63 @@
+Task:
+Given the lengths L[i] and deadlines D[i] of N jobs, find the maximum total
+reward that can be achieved by completing the job in some order.
+Each job must be started on or after time 0 and no pair of jobs are allowed to
+overlap in time. If the i'th job starts at time S[i] then it finishes at time
+S[i] + L[i] and another job can be started at time S[i] + L[i] if necessary.
+If the i'th job finishes at time F[i] then then reward for this job is
+D[i] - F[i]. Total reward is the sum of the rewards of all the jobs.
+
+Input:
+First line contains the number of tests. The description of each test follows.
+Each test is described by (N+1) lines. First line contains N. Each of the next
+N lines contains two integers L[i] and D[i].
+
+Output:
+For each test in the given order, print the amount that you are asked to find
+in this task in one line.
+
+Example-1 (batch-1):
+Input (stdin):
+2
+3
+6 10
+8 15
+5 12
+3
+5 6
+3 13
+15 15
+Output (stdout):
+2
+0
+
+Example-2 (batch-2):
+Input (stdin):
+2
+2
+2 2
+1 10
+3
+6 1
+5 1
+15 1
+Output (stdout):
+8
+-39
+
+Scoring:
+Batch   Score   Tests   Constraints
+1       0.1     2       1<=N<=3, 1<=L[i]<=15, 1<=D[i]<=15
+2       0.1     2       1<=N<=3, 1<=L[i]<=15, 1<=D[i]<=15
+3       0.2     5000    1<=N<=20, 1<=L[i]<=100, 1<=D[i]<=100
+4       0.3     50      1<=N<=5000, 1<=L[i]<=10000, 1<=D[i]<=10000
+5       0.3     5       1<=N<=100000, 1<=L[i]<=1000000, 1<=D[i]<=1000000
+------------------------
+5       1       Total
+
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
+
+Hints:
+- Use fast input/output methods.
+- 0.2 score for passing only sample batches.
+- O(N*log(N)) solution is expected.
