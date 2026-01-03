@@ -1,0 +1,80 @@
+Task:
+Given N intervals of integers [A[i], B[i]], find the maximum number of
+intervals that can be selected (and any such selection of intervals) such that
+no pair of selected intervals overlap.
+Two intervals [A[x], B[x]] and [A[y], B[y]] overlap if and only if
+max(A[x], A[y]) <= min(B[x], B[y]).
+
+Input:
+First line contains the number of tests. The description of each test follows.
+Each test is described by (N+1) lines. First line contains N. Each of the next
+N lines contains an interval [A[i], B[i]].
+
+Output:
+For each test in the given order, print the maximum number of intervals that
+you are asked to find in this task in one line followed by any valid selection
+of the intervals that satisfies the asked conditions in any order, one interval
+per line.
+
+Example-1 (batch-1):
+Input (stdin):
+2
+6
+1 3
+2 5
+3 7
+4 6
+6 8
+7 9
+5
+1 4
+2 5
+6 7
+4 8
+3 6
+Output (stdout):
+3
+1 3
+4 6
+7 9
+2
+1 4
+6 7
+
+Example-2 (batch-2):
+Input (stdin):
+2
+1
+0 0
+7
+0 4
+3 4
+1 5
+9 10
+6 9
+2 3
+1 2
+Output (stdout):
+1
+0 0
+3
+1 2
+3 4
+6 9
+
+Scoring:
+Batch   Score   Tests   Constraints
+1       0.1     2       1<=N<=10, 0<=A[i]<=B[i]<=10
+2       0.1     2       1<=N<=10, 0<=A[i]<=B[i]<=10
+3       0.2     5000    1<=N<=20, 0<=A[i]<=B[i]<=1000
+4       0.3     50      1<=N<=5000, 0<=A[i]<=B[i]<=1000000
+5       0.3     5       1<=N<=100000, 0<=A[i]<=B[i]<=1000000000
+------------------------
+5       1       Total
+
+Time limit: 1s (cpp) or 1.5s (java) or 3s (py) per batch.
+
+Hints:
+- Use fast input/output methods.
+- 0.2 score for passing only sample batches.
+- O(N*log(N)) solution is expected.
